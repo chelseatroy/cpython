@@ -78,97 +78,34 @@ int _PyUnicode_IsTitlecase(Py_UCS4 ch)
     return (ctype->flags & TITLE_MASK) != 0;
 }
 
-/* Returns 1 if ch is an emoji codepoint that should be allowed in identifiers.
-
-   This function checks various Unicode ranges that contain emoji characters.
-   The ranges are based on Unicode emoji data and include:
-   - Miscellaneous Symbols (U+2600-U+26FF)
-   - Dingbats (U+2700-U+27BF)
-   - Miscellaneous Symbols and Pictographs (U+1F300-U+1F5FF)
-   - Emoticons (U+1F600-U+1F64F)
-   - Transport and Map Symbols (U+1F680-U+1F6FF)
-   - Supplemental Symbols and Pictographs (U+1F900-U+1F9FF)
-   - Symbols and Pictographs Extended-A (U+1FA00-U+1FAFF)
-   - Skin tone modifiers (U+1F3FB-U+1F3FF)
-*/
-static int
-_PyUnicode_IsEmoji(Py_UCS4 ch)
+/* Returns 1 if ch is an emoji codepoint (broad block-based ranges).
+   Non-static so _PyUnicode_ScanIdentifier can use it. */
+int _PyUnicode_IsEmoji(Py_UCS4 ch)
 {
-    /* Miscellaneous Symbols (U+2600-U+26FF) */
-    if (ch >= 0x2600 && ch <= 0x26FF)
-        return 1;
-
-    /* Dingbats (U+2700-U+27BF) */
-    if (ch >= 0x2700 && ch <= 0x27BF)
-        return 1;
-
-    /* Miscellaneous Symbols and Pictographs (U+1F300-U+1F5FF) */
-    if (ch >= 0x1F300 && ch <= 0x1F5FF)
-        return 1;
-
-    /* Emoticons (U+1F600-U+1F64F) */
-    if (ch >= 0x1F600 && ch <= 0x1F64F)
-        return 1;
-
-    /* Transport and Map Symbols (U+1F680-U+1F6FF) */
-    if (ch >= 0x1F680 && ch <= 0x1F6FF)
-        return 1;
-
-    /* Supplemental Symbols and Pictographs (U+1F900-U+1F9FF) */
-    if (ch >= 0x1F900 && ch <= 0x1F9FF)
-        return 1;
-
-    /* Symbols and Pictographs Extended-A (U+1FA00-U+1FAFF) */
-    if (ch >= 0x1FA00 && ch <= 0x1FAFF)
-        return 1;
-
-    /* Skin tone modifiers (U+1F3FB-U+1F3FF) */
-    if (ch >= 0x1F3FB && ch <= 0x1F3FF)
-        return 1;
-
+    if (ch >= 0x2600 && ch <= 0x26FF) return 1;
+    if (ch >= 0x2700 && ch <= 0x27BF) return 1;
+    if (ch >= 0x1F300 && ch <= 0x1F5FF) return 1;
+    if (ch >= 0x1F600 && ch <= 0x1F64F) return 1;
+    if (ch >= 0x1F680 && ch <= 0x1F6FF) return 1;
+    if (ch >= 0x1F900 && ch <= 0x1F9FF) return 1;
+    if (ch >= 0x1FA00 && ch <= 0x1FAFF) return 1;
+    if (ch >= 0x1F3FB && ch <= 0x1F3FF) return 1;
     return 0;
 }
 
-/* Returns 1 for Unicode characters having the XID_Start property, 0
-   otherwise. Also returns 1 for emoji characters that can start identifiers. */
-
+/* Returns 1 for XID_Start or emoji characters. */
 int _PyUnicode_IsXidStart(Py_UCS4 ch)
 {
     const _PyUnicode_TypeRecord *ctype = gettyperecord(ch);
-
     return (ctype->flags & XID_START_MASK) != 0 || _PyUnicode_IsEmoji(ch);
 }
 
-/* Returns 1 for Unicode characters having the XID_Continue property,
-   0 otherwise. Also returns 1 for emoji characters and emoji-related
-   modifier characters that can continue identifiers.
-
-   This includes:
-   - All emoji characters (via _PyUnicode_IsEmoji)
-   - Zero Width Joiner (U+200D) for ZWJ emoji sequences
-   - Variation Selector 16 (U+FE0F) for emoji presentation
-*/
-
+/* Returns 1 for XID_Continue or emoji characters.
+   ZWJ/VS16 handled contextually in _PyUnicode_ScanIdentifier. */
 int _PyUnicode_IsXidContinue(Py_UCS4 ch)
 {
     const _PyUnicode_TypeRecord *ctype = gettyperecord(ch);
-
-    if ((ctype->flags & XID_CONTINUE_MASK) != 0)
-        return 1;
-
-    /* Allow emoji characters */
-    if (_PyUnicode_IsEmoji(ch))
-        return 1;
-
-    /* Allow Zero Width Joiner (U+200D) for ZWJ emoji sequences */
-    if (ch == 0x200D)
-        return 1;
-
-    /* Allow Variation Selector 16 (U+FE0F) for emoji presentation */
-    if (ch == 0xFE0F)
-        return 1;
-
-    return 0;
+    return (ctype->flags & XID_CONTINUE_MASK) != 0 || _PyUnicode_IsEmoji(ch);
 }
 
 /* Returns the integer decimal (0-9) for Unicode characters having

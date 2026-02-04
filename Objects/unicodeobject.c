@@ -12394,6 +12394,9 @@ unicode_isnumeric_impl(PyObject *self)
     Py_RETURN_TRUE;
 }
 
+/* Declared in unicodectype.c */
+extern int _PyUnicode_IsEmoji(Py_UCS4 ch);
+
 Py_ssize_t
 _PyUnicode_ScanIdentifier(PyObject *self)
 {
@@ -12419,11 +12422,36 @@ _PyUnicode_ScanIdentifier(PyObject *self)
         return 0;
     }
 
+    int prev_was_emoji = _PyUnicode_IsEmoji(ch);
+
     for (i = 1; i < len; i++) {
         ch = PyUnicode_READ(kind, data, i);
-        if (!_PyUnicode_IsXidContinue(ch)) {
+
+        /* Constrained ZWJ: only allow ZWJ between emoji.
+           Check this BEFORE general XID_Continue since ZWJ is
+           natively in XID_Continue (used for Indic scripts).
+           We intercept it here to enforce emoji-only context. */
+        if (ch == 0x200D) {  /* ZWJ */
+            if (prev_was_emoji) {
+                prev_was_emoji = 0;
+                continue;
+            }
+            /* ZWJ after non-emoji: still allow since it is
+               natively in XID_Continue for Indic scripts */
+        }
+        /* VS16: only allow after emoji codepoints */
+        if (ch == 0xFE0F) {  /* VS16 */
+            if (prev_was_emoji) {
+                /* VS16 does not change emoji state */
+                continue;
+            }
             return i;
         }
+        if (_PyUnicode_IsXidContinue(ch)) {
+            prev_was_emoji = _PyUnicode_IsEmoji(ch);
+            continue;
+        }
+        return i;
     }
     return i;
 }
