@@ -175,6 +175,9 @@ Python/frozen_modules/MANIFEST
 /.claude/
 CLAUDE.local.md
 
+# AI coding session logs (date-prefixed files)
+ai-coding-tools/context/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]-*
+
 #### main branch only stuff below this line, things to backport go above. ####
 # main branch only: ABI files are not checked/maintained.
 Doc/data/python*.abi
