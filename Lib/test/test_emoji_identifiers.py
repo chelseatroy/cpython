@@ -218,6 +218,28 @@ class EdgeCaseTests(unittest.TestCase):
         exec("\U0001F389123 = 456", exec_globals)
         self.assertEqual(exec_globals["\U0001F389123"], 456)
 
+    def test_emoji_identifier__regional_indicator_with_ascii__valid(self):
+        """Regional indicator followed by ASCII should be valid identifier."""
+        self.assertTrue("\U0001F1E6bc".isidentifier())  # 🇦bc
+        exec_globals = {}
+        exec("\U0001F1E6bc = 123", exec_globals)
+        self.assertEqual(exec_globals["\U0001F1E6bc"], 123)
+
+    def test_emoji_identifier__geometric_shape_with_underscore__valid(self):
+        """Geometric shape with underscore should be valid identifier."""
+        self.assertTrue("\U0001F7E2_circle".isidentifier())  # 🟢_circle
+        self.assertTrue("circle_\U0001F7E2".isidentifier())  # circle_🟢
+        exec_globals = {}
+        exec("\U0001F7E2_var = 'green'", exec_globals)
+        self.assertEqual(exec_globals["\U0001F7E2_var"], 'green')
+
+    def test_emoji_identifier__geometric_shape_with_numbers__valid(self):
+        """Geometric shape followed by numbers should be valid identifier."""
+        self.assertTrue("\U0001F7E2123".isidentifier())  # 🟢123
+        exec_globals = {}
+        exec("\U0001F7E21 = 100", exec_globals)
+        self.assertEqual(exec_globals["\U0001F7E21"], 100)
+
 
 class BackwardCompatibilityTests(unittest.TestCase):
     """Tests ensuring backward compatibility with existing identifier rules."""
@@ -308,6 +330,94 @@ class NegativeTests(unittest.TestCase):
         self.assertFalse("\n".isidentifier())
         self.assertFalse("a b".isidentifier())
         self.assertFalse("\U0001F389 \U0001F680".isidentifier())  # emoji space emoji
+
+
+class BoundaryTests(unittest.TestCase):
+    """Tests for boundary conditions in emoji range checking.
+
+    These tests verify that the range checks in _PyUnicode_IsEmoji are
+    correct and don't have off-by-one errors. For each range, we test:
+    - The first character in the range (lower boundary)
+    - The last character in the range (upper boundary)
+    - One character just before the range (should be invalid)
+    - One character just after the range (should be invalid)
+    """
+
+    def test_boundary__regional_indicators_first__valid(self):
+        """First Regional Indicator (U+1F1E6) should be valid.
+
+        U+1F1E6 is Regional Indicator Symbol Letter A (🇦), the first
+        character in the Regional Indicators block.
+        """
+        self.assertTrue("\U0001F1E6".isidentifier())
+
+    def test_boundary__regional_indicators_last__valid(self):
+        """Last Regional Indicator (U+1F1FF) should be valid.
+
+        U+1F1FF is Regional Indicator Symbol Letter Z (🇿), the last
+        character in the Regional Indicators block.
+        """
+        self.assertTrue("\U0001F1FF".isidentifier())
+
+    def test_boundary__regional_indicators_middle__valid(self):
+        """Middle Regional Indicators should be valid.
+
+        Test a few characters in the middle of the range to ensure the
+        entire range is covered, not just the endpoints.
+        """
+        # 🇰 U+1F1F0 (Regional Indicator Symbol Letter K)
+        self.assertTrue("\U0001F1F0".isidentifier())
+        # 🇲 U+1F1F2 (Regional Indicator Symbol Letter M)
+        self.assertTrue("\U0001F1F2".isidentifier())
+
+    def test_boundary__before_regional_indicators__invalid(self):
+        """Character before Regional Indicators (U+1F1E5) should be invalid.
+
+        U+1F1E5 is just before the Regional Indicators block and should
+        not be treated as an emoji identifier character.
+        """
+        self.assertFalse("\U0001F1E5".isidentifier())
+
+    def test_boundary__after_regional_indicators__invalid(self):
+        """Character after Regional Indicators (U+1F200) should be invalid.
+
+        U+1F200 is just after the Regional Indicators block and should
+        not be treated as an emoji identifier character. This verifies
+        we don't have an off-by-one error on the upper bound.
+        """
+        self.assertFalse("\U0001F200".isidentifier())
+
+    def test_boundary__geometric_shapes_first__valid(self):
+        """First Geometric Shape Extended (U+1F780) should be valid.
+
+        U+1F780 is the first character in the Geometric Shapes Extended
+        block, which contains colored shapes and other geometric symbols.
+        """
+        self.assertTrue("\U0001F780".isidentifier())
+
+    def test_boundary__geometric_shapes_last__valid(self):
+        """Last Geometric Shape Extended (U+1F7FF) should be valid.
+
+        U+1F7FF is the last character in the Geometric Shapes Extended
+        block.
+        """
+        self.assertTrue("\U0001F7FF".isidentifier())
+
+    def test_boundary__before_geometric_shapes__invalid(self):
+        """Character before Geometric Shapes Extended (U+1F77F) should be invalid.
+
+        U+1F77F is just before the Geometric Shapes Extended block and
+        should not be treated as an emoji identifier character.
+        """
+        self.assertFalse("\U0001F77F".isidentifier())
+
+    def test_boundary__after_geometric_shapes__invalid(self):
+        """Character after Geometric Shapes Extended (U+1F800) should be invalid.
+
+        U+1F800 is just after the Geometric Shapes Extended block and
+        should not be treated as an emoji identifier character.
+        """
+        self.assertFalse("\U0001F800".isidentifier())
 
 
 class FunctionalTests(unittest.TestCase):
@@ -424,6 +534,54 @@ result = \U0001F1FA\U0001F1F8 + \U0001F1EB\U0001F1F7 + \U0001F1EF\U0001F1F5
 """
         exec(code, exec_globals)
         self.assertEqual(exec_globals["result"], 6)
+
+    def test_functional__regional_indicator_single_char_as_variable(self):
+        """Single regional indicator character should work as variable."""
+        exec_globals = {}
+        # Use a middle-range regional indicator (K = U+1F1F0)
+        code = """
+\U0001F1F0 = "K indicator"
+result = \U0001F1F0
+"""
+        exec(code, exec_globals)
+        self.assertEqual(exec_globals["result"], "K indicator")
+
+    def test_functional__geometric_shape_boundary_chars_in_code(self):
+        """First and last geometric shapes should work in actual code."""
+        exec_globals = {}
+        code = """
+\U0001F780 = "first"
+\U0001F7FF = "last"
+result = \U0001F780 + " " + \U0001F7FF
+"""
+        exec(code, exec_globals)
+        self.assertEqual(exec_globals["result"], "first last")
+
+    def test_functional__mix_regional_and_geometric_in_expression(self):
+        """Regional indicators and geometric shapes in same expression."""
+        exec_globals = {}
+        code = """
+\U0001F1E6 = 1  # Regional Indicator A
+\U0001F7E2 = 2  # Green Circle
+result = \U0001F1E6 + \U0001F7E2
+"""
+        exec(code, exec_globals)
+        self.assertEqual(exec_globals["result"], 3)
+
+    def test_functional__geometric_shapes_distinct_identifiers(self):
+        """Different colored shapes should be distinct identifiers."""
+        exec_globals = {}
+        code = """
+\U0001F7E2 = "green"
+\U0001F7E5 = "red"
+\U0001F7E7 = "orange square"
+colors = [\U0001F7E2, \U0001F7E5, \U0001F7E7]
+"""
+        exec(code, exec_globals)
+        self.assertEqual(
+            exec_globals["colors"],
+            ["green", "red", "orange square"]
+        )
 
 
 if __name__ == "__main__":
