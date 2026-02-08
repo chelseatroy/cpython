@@ -12418,11 +12418,10 @@ _PyUnicode_ScanIdentifier(PyObject *self)
        definition of XID_Start and XID_Continue, it is sufficient
        to check just for these, except that _ must be allowed
        as starting an identifier.  */
-    if (!_PyUnicode_IsXidStart(ch) && ch != 0x5F /* LOW LINE */) {
+    int prev_was_emoji = _PyUnicode_IsEmoji(ch);
+    if (!prev_was_emoji && !_PyUnicode_IsXidStart(ch) && ch != 0x5F /* LOW LINE */) {
         return 0;
     }
-
-    int prev_was_emoji = _PyUnicode_IsEmoji(ch);
 
     for (i = 1; i < len; i++) {
         ch = PyUnicode_READ(kind, data, i);
@@ -12447,8 +12446,9 @@ _PyUnicode_ScanIdentifier(PyObject *self)
             }
             return i;
         }
-        if (_PyUnicode_IsXidContinue(ch)) {
-            prev_was_emoji = _PyUnicode_IsEmoji(ch);
+        int is_emoji = _PyUnicode_IsEmoji(ch);
+        if (is_emoji || _PyUnicode_IsXidContinue(ch)) {
+            prev_was_emoji = is_emoji;
             continue;
         }
         return i;
