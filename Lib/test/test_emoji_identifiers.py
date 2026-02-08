@@ -106,6 +106,55 @@ class EmojiRangeTests(unittest.TestCase):
         # 🫠 U+1FAE0 (Melting Face)
         self.assertTrue("\U0001FAE0".isidentifier())
 
+    def test_emoji_identifier__geometric_shapes_extended_range__valid(self):
+        """Geometric Shapes Extended (U+1F780-U+1F7FF) should be valid.
+
+        This block contains the colored circle and square emoji added in
+        Unicode 12.0, such as 🟢🟠🟡🟣🟤🟥🟧🟨🟩🟪🟫.
+        These live in a different block than the older 🔴🔵 (which are
+        in Misc Symbols & Pictographs U+1F300-U+1F5FF).
+        """
+        # 🟢 U+1F7E2 (Green Circle)
+        self.assertTrue("\U0001F7E2".isidentifier())
+        # 🟠 U+1F7E0 (Orange Circle)
+        self.assertTrue("\U0001F7E0".isidentifier())
+        # 🟡 U+1F7E1 (Yellow Circle)
+        self.assertTrue("\U0001F7E1".isidentifier())
+        # 🟣 U+1F7E3 (Purple Circle)
+        self.assertTrue("\U0001F7E3".isidentifier())
+        # 🟥 U+1F7E5 (Red Square)
+        self.assertTrue("\U0001F7E5".isidentifier())
+        # 🟫 U+1F7EB (Brown Square)
+        self.assertTrue("\U0001F7EB".isidentifier())
+
+    def test_emoji_identifier__regional_indicators_range__valid(self):
+        """Regional Indicator Symbols (U+1F1E6-U+1F1FF) should be valid.
+
+        These are the building blocks of flag emoji. Each regional
+        indicator corresponds to a letter A-Z, and pairs form country
+        flags (e.g. U+1F1FA U+1F1F8 = 🇺🇸).
+        """
+        # 🇦 U+1F1E6 (Regional Indicator Symbol Letter A)
+        self.assertTrue("\U0001F1E6".isidentifier())
+        # 🇿 U+1F1FF (Regional Indicator Symbol Letter Z)
+        self.assertTrue("\U0001F1FF".isidentifier())
+
+    def test_emoji_identifier__flag_pairs__valid(self):
+        """Flag emoji (pairs of regional indicators) should be valid identifiers.
+
+        Each flag is two regional indicator code points. As identifiers,
+        both code points are valid characters, so the flag forms a
+        two-character identifier.
+        """
+        # 🇺🇸 U+1F1FA U+1F1F8 (US flag)
+        self.assertTrue("\U0001F1FA\U0001F1F8".isidentifier())
+        # 🇫🇷 U+1F1EB U+1F1F7 (France flag)
+        self.assertTrue("\U0001F1EB\U0001F1F7".isidentifier())
+        # 🇯🇵 U+1F1EF U+1F1F5 (Japan flag)
+        self.assertTrue("\U0001F1EF\U0001F1F5".isidentifier())
+        # 🇧🇷 U+1F1E7 U+1F1F7 (Brazil flag)
+        self.assertTrue("\U0001F1E7\U0001F1F7".isidentifier())
+
 
 class ZWJSequenceTests(unittest.TestCase):
     """Tests for Zero Width Joiner (ZWJ) emoji sequences.
@@ -322,6 +371,59 @@ result = \U0001F3AF(7)
 """
         exec(code, exec_globals)
         self.assertEqual(exec_globals["result"], 49)
+
+    def test_functional__geometric_shapes_as_variables(self):
+        """Colored circle/square emoji should work as variable names."""
+        exec_globals = {}
+        code = """
+\U0001F7E2 = "green"
+\U0001F7E0 = "orange"
+\U0001F7E3 = "purple"
+result = \U0001F7E2 + " " + \U0001F7E0 + " " + \U0001F7E3
+"""
+        exec(code, exec_globals)
+        self.assertEqual(exec_globals["result"], "green orange purple")
+
+    def test_functional__flag_as_variable(self):
+        """Flag emoji should work as variable names."""
+        exec_globals = {}
+        # 🇺🇸 = U+1F1FA U+1F1F8
+        code = """
+\U0001F1FA\U0001F1F8 = "United States"
+"""
+        exec(code, exec_globals)
+        self.assertEqual(
+            exec_globals["\U0001F1FA\U0001F1F8"], "United States"
+        )
+
+    def test_functional__flags_in_dict_comprehension(self):
+        """Multiple flag emoji should work as identifiers in a loop."""
+        exec_globals = {}
+        code = """
+flags = {
+    "\U0001F1FA\U0001F1F8": "US",
+    "\U0001F1EB\U0001F1F7": "FR",
+    "\U0001F1EF\U0001F1F5": "JP",
+}
+# Use flag emoji as loop variable
+result = []
+for \U0001F3F3 in flags.values():
+    result.append(\U0001F3F3)
+"""
+        exec(code, exec_globals)
+        self.assertEqual(exec_globals["result"], ["US", "FR", "JP"])
+
+    def test_functional__distinct_flags_are_distinct_identifiers(self):
+        """Different flag emoji should be distinct identifiers."""
+        exec_globals = {}
+        code = """
+\U0001F1FA\U0001F1F8 = 1
+\U0001F1EB\U0001F1F7 = 2
+\U0001F1EF\U0001F1F5 = 3
+result = \U0001F1FA\U0001F1F8 + \U0001F1EB\U0001F1F7 + \U0001F1EF\U0001F1F5
+"""
+        exec(code, exec_globals)
+        self.assertEqual(exec_globals["result"], 6)
 
 
 if __name__ == "__main__":
