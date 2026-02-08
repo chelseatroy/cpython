@@ -9,6 +9,7 @@
 */
 
 #include "Python.h"
+#include "pycore_unicodeobject.h"  // _PyUnicode_IsEmoji
 
 #define ALPHA_MASK 0x01
 #define DECIMAL_MASK 0x02
@@ -76,40 +77,6 @@ int _PyUnicode_IsTitlecase(Py_UCS4 ch)
     const _PyUnicode_TypeRecord *ctype = gettyperecord(ch);
 
     return (ctype->flags & TITLE_MASK) != 0;
-}
-
-#define EMOJI_MISC_SYMBOLS_START     0x2600
-#define EMOJI_DINGBATS_END           0x27BF
-#define EMOJI_REGIONAL_IND_START     0x1F1E6
-#define EMOJI_REGIONAL_IND_END       0x1F1FF
-#define EMOJI_MISC_PICTOGRAPHS_START 0x1F300
-#define EMOJI_MISC_PICTOGRAPHS_END   0x1F5FF
-#define EMOJI_EMOTICONS_START        0x1F600
-#define EMOJI_EMOTICONS_END          0x1F64F
-#define EMOJI_TRANSPORT_START        0x1F680
-#define EMOJI_TRANSPORT_END          0x1F6FF
-#define EMOJI_GEOMETRIC_EXT_START    0x1F780
-#define EMOJI_GEOMETRIC_EXT_END      0x1F7FF
-#define EMOJI_SUPPLEMENTAL_START     0x1F900
-#define EMOJI_SUPPLEMENTAL_END       0x1F9FF
-#define EMOJI_EXTENDED_A_START       0x1FA00
-#define EMOJI_EXTENDED_A_END         0x1FAFF
-
-/* Returns 1 if ch is an emoji codepoint (broad block-based ranges).
-   Non-static so _PyUnicode_ScanIdentifier can use it. */
-int _PyUnicode_IsEmoji(Py_UCS4 ch)
-{
-    if (ch < EMOJI_MISC_SYMBOLS_START || ch > EMOJI_EXTENDED_A_END) return 0;
-    if (ch <= EMOJI_DINGBATS_END) return 1;
-    if (ch < EMOJI_REGIONAL_IND_START) return 0;
-    if (ch <= EMOJI_REGIONAL_IND_END) return 1;
-    if (ch >= EMOJI_MISC_PICTOGRAPHS_START && ch <= EMOJI_MISC_PICTOGRAPHS_END) return 1;
-    if (ch >= EMOJI_EMOTICONS_START && ch <= EMOJI_EMOTICONS_END) return 1;
-    if (ch >= EMOJI_TRANSPORT_START && ch <= EMOJI_TRANSPORT_END) return 1;
-    if (ch >= EMOJI_GEOMETRIC_EXT_START && ch <= EMOJI_GEOMETRIC_EXT_END) return 1;
-    if (ch >= EMOJI_SUPPLEMENTAL_START && ch <= EMOJI_SUPPLEMENTAL_END) return 1;
-    if (ch >= EMOJI_EXTENDED_A_START && ch <= EMOJI_EXTENDED_A_END) return 1;
-    return 0;
 }
 
 /* Returns 1 for XID_Start or emoji characters. */

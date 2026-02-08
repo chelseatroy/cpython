@@ -12394,9 +12394,6 @@ unicode_isnumeric_impl(PyObject *self)
     Py_RETURN_TRUE;
 }
 
-/* Declared in unicodectype.c */
-extern int _PyUnicode_IsEmoji(Py_UCS4 ch);
-
 Py_ssize_t
 _PyUnicode_ScanIdentifier(PyObject *self)
 {
