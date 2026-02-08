@@ -98,6 +98,8 @@ int _PyUnicode_IsEmoji(Py_UCS4 ch)
 /* Returns 1 for XID_Start or emoji characters. */
 int _PyUnicode_IsXidStart(Py_UCS4 ch)
 {
+    if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'))
+        return 1;
     const _PyUnicode_TypeRecord *ctype = gettyperecord(ch);
     return (ctype->flags & XID_START_MASK) != 0 || _PyUnicode_IsEmoji(ch);
 }
@@ -106,6 +108,9 @@ int _PyUnicode_IsXidStart(Py_UCS4 ch)
    ZWJ/VS16 handled contextually in _PyUnicode_ScanIdentifier. */
 int _PyUnicode_IsXidContinue(Py_UCS4 ch)
 {
+    if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') ||
+        (ch >= '0' && ch <= '9') || ch == '_')
+        return 1;
     const _PyUnicode_TypeRecord *ctype = gettyperecord(ch);
     return (ctype->flags & XID_CONTINUE_MASK) != 0 || _PyUnicode_IsEmoji(ch);
 }
