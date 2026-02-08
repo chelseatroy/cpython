@@ -82,6 +82,7 @@ int _PyUnicode_IsTitlecase(Py_UCS4 ch)
    Non-static so _PyUnicode_ScanIdentifier can use it. */
 int _PyUnicode_IsEmoji(Py_UCS4 ch)
 {
+    if (ch < 0x2600 || ch > 0x1FAFF) return 0;
     if (ch >= 0x2600 && ch <= 0x26FF) return 1;
     if (ch >= 0x2700 && ch <= 0x27BF) return 1;
     if (ch >= 0x1F300 && ch <= 0x1F5FF) return 1;
