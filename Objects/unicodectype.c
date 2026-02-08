@@ -89,7 +89,6 @@ int _PyUnicode_IsEmoji(Py_UCS4 ch)
     if (ch >= 0x1F680 && ch <= 0x1F6FF) return 1;
     if (ch >= 0x1F900 && ch <= 0x1F9FF) return 1;
     if (ch >= 0x1FA00 && ch <= 0x1FAFF) return 1;
-    if (ch >= 0x1F3FB && ch <= 0x1F3FF) return 1;
     if (ch >= 0x1F1E6 && ch <= 0x1F1FF) return 1;
     if (ch >= 0x1F780 && ch <= 0x1F7FF) return 1;
     return 0;
