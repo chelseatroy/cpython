@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Miscellaneous Technical (U+2300..U+23FF) — Per-Character Frequency Heatmap</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: #111;
+  color: #eee;
+  padding: 24px;
+}
+h1 { text-align: center; margin-bottom: 6px; font-size: 1.5rem; }
+.subtitle { text-align: center; margin-bottom: 20px; font-size: 0.85rem;
+             color: #aaa; max-width: 800px; margin-left: auto; margin-right: auto; }
+.legend {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; margin-bottom: 20px; font-size: 0.8rem;
+}
+.legend-bar {
+  width: 320px; height: 18px; border-radius: 4px;
+  background: linear-gradient(to right, rgb(20,24,46), rgb(26,39,77), rgb(33,56,106), rgb(40,77,127), rgb(47,101,135), rgb(56,128,124), rgb(79,155,95), rgb(126,173,60), rgb(186,175,38), rgb(220,150,30), rgb(211,99,21), rgb(190,50,20), rgb(130,10,10));
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  gap: 3px;
+}
+.char-cell {
+  position: relative;
+  padding: 6px 4px;
+  border-radius: 4px;
+  min-height: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.15s;
+  cursor: default;
+}
+.char-cell:hover { transform: scale(1.08); z-index: 2; box-shadow: 0 0 8px rgba(255,255,255,0.3); }
+.char-check { position: absolute; top: 3px; right: 3px; width: 14px; height: 14px; cursor: pointer; accent-color: #7af; }
+.char-display { font-size: 1.4rem; line-height: 1.3; }
+.char-code { font-size: 0.55rem; opacity: 0.8; font-family: monospace; margin-top: 2px; }
+.char-freq { font-size: 0.5rem; opacity: 0.7; font-family: monospace; margin-top: 1px; }
+.tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #222;
+  color: #eee;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  z-index: 10;
+  pointer-events: none;
+}
+.char-cell:hover .tooltip { display: block; }
+.source { text-align: center; margin-top: 24px; font-size: 0.75rem; color: #888; }
+.source a { color: #7af; }
+@media (max-width: 1100px) { .grid { grid-template-columns: repeat(8, 1fr); } }
+@media (max-width: 600px)  { .grid { grid-template-columns: repeat(4, 1fr); } }
+</style>
+</head>
+<body>
+
+<h1>Miscellaneous Technical — Per-Character Heatmap</h1>
+<p class="subtitle">
+  All 256 characters in the Miscellaneous Technical block (U+2300..U+23FF), in code-point order.
+  Background colour shows character frequency in English web text (log scale).
+  Hover for Unicode name. Check tiles and click Export to copy selections.
+</p>
+
+<div class="legend">
+  <span>0 occurrences</span>
+  <div class="legend-bar"></div>
+  <span>1.4 M</span>
+  <button id="export-btn" style="margin-left:16px; padding:4px 12px; border-radius:4px; border:1px solid #888; background:#222; color:#7af; cursor:pointer; font-size:0.8rem;">Export selections</button>
+</div>
+
+<div class="grid">
+<div class="char-cell" style="background:rgb(206,82,20);color:#f0f0f0" data-cp="U+2300" data-name="DIAMETER SIGN"><div class="char-display">⌀</div><div class="char-code">U+2300</div><div class="char-freq">199.9 K</div></div>
+<div class="char-cell" style="background:rgb(195,168,36);color:#111" data-cp="U+2301" data-name="ELECTRIC ARROW"><div class="char-display">⌁</div><div class="char-code">U+2301</div><div class="char-freq">17.1 K</div></div>
+<div class="char-cell" style="background:rgb(211,100,21);color:#f0f0f0" data-cp="U+2302" data-name="HOUSE"><div class="char-display">⌂</div><div class="char-code">U+2302</div><div class="char-freq">132.4 K</div></div>
+<div class="char-cell" style="background:rgb(209,88,20);color:#f0f0f0" data-cp="U+2303" data-name="UP ARROWHEAD"><div class="char-display">⌃</div><div class="char-code">U+2303</div><div class="char-freq">172.4 K</div></div>
+<div class="char-cell" style="background:rgb(218,143,28);color:#111" data-cp="U+2304" data-name="DOWN ARROWHEAD"><div class="char-display">⌄</div><div class="char-code">U+2304</div><div class="char-freq">47.9 K</div></div>
+<div class="char-cell" style="background:rgb(111,171,65);color:#111" data-cp="U+2305" data-name="PROJECTIVE"><div class="char-display">⌅</div><div class="char-code">U+2305</div><div class="char-freq">2.9 K</div></div>
+<div class="char-cell" style="background:rgb(79,154,95);color:#f0f0f0" data-cp="U+2306" data-name="PERSPECTIVE"><div class="char-display">⌆</div><div class="char-code">U+2306</div><div class="char-freq">1.2 K</div></div>
+<div class="char-cell" style="background:rgb(204,161,33);color:#111" data-cp="U+2307" data-name="WAVY LINE"><div class="char-display">⌇</div><div class="char-code">U+2307</div><div class="char-freq">23.3 K</div></div>
+<div class="char-cell" style="background:rgb(210,93,20);color:#f0f0f0" data-cp="U+2308" data-name="LEFT CEILING"><div class="char-display">⌈</div><div class="char-code">U+2308</div><div class="char-freq">156.7 K</div></div>
+<div class="char-cell" style="background:rgb(212,103,22);color:#f0f0f0" data-cp="U+2309" data-name="RIGHT CEILING"><div class="char-display">⌉</div><div class="char-code">U+2309</div><div class="char-freq">121.6 K</div></div>
+<div class="char-cell" style="background:rgb(210,94,20);color:#f0f0f0" data-cp="U+230A" data-name="LEFT FLOOR"><div class="char-display">⌊</div><div class="char-code">U+230A</div><div class="char-freq">151.0 K</div></div>
+<div class="char-cell" style="background:rgb(210,90,20);color:#f0f0f0" data-cp="U+230B" data-name="RIGHT FLOOR"><div class="char-display">⌋</div><div class="char-code">U+230B</div><div class="char-freq">166.5 K</div></div>
+<div class="char-cell" style="background:rgb(55,125,125);color:#f0f0f0" data-cp="U+230C" data-name="BOTTOM RIGHT CROP"><div class="char-display">⌌</div><div class="char-code">U+230C</div><div class="char-freq">312</div></div>
+<div class="char-cell" style="background:rgb(51,112,130);color:#f0f0f0" data-cp="U+230D" data-name="BOTTOM LEFT CROP"><div class="char-display">⌍</div><div class="char-code">U+230D</div><div class="char-freq">181</div></div>
+<div class="char-cell" style="background:rgb(51,114,130);color:#f0f0f0" data-cp="U+230E" data-name="TOP RIGHT CROP"><div class="char-display">⌎</div><div class="char-code">U+230E</div><div class="char-freq">201</div></div>
+<div class="char-cell" style="background:rgb(114,171,64);color:#111" data-cp="U+230F" data-name="TOP LEFT CROP"><div class="char-display">⌏</div><div class="char-code">U+230F</div><div class="char-freq">3.1 K</div></div>
+<div class="char-cell" style="background:rgb(218,142,28);color:#111" data-cp="U+2310" data-name="REVERSED NOT SIGN"><div class="char-display">⌐</div><div class="char-code">U+2310</div><div class="char-freq">49.2 K</div></div>
+<div class="char-cell" style="background:rgb(149,176,51);color:#111" data-cp="U+2311" data-name="SQUARE LOZENGE"><div class="char-display">⌑</div><div class="char-code">U+2311</div><div class="char-freq">5.8 K</div></div>
+<div class="char-cell" style="background:rgb(210,92,20);color:#f0f0f0" data-cp="U+2312" data-name="ARC"><div class="char-display">⌒</div><div class="char-code">U+2312</div><div class="char-freq">157.1 K</div></div>
+<div class="char-cell" style="background:rgb(179,179,40);color:#111" data-cp="U+2313" data-name="SEGMENT"><div class="char-display">⌓</div><div class="char-code">U+2313</div><div class="char-freq">9.9 K</div></div>
+<div class="char-cell" style="background:rgb(112,171,65);color:#111" data-cp="U+2314" data-name="SECTOR"><div class="char-display">⌔</div><div class="char-code">U+2314</div><div class="char-freq">3.0 K</div></div>
+<div class="char-cell" style="background:rgb(214,117,24);color:#f0f0f0" data-cp="U+2315" data-name="TELEPHONE RECORDER"><div class="char-display">⌕</div><div class="char-code">U+2315</div><div class="char-freq">88.7 K</div></div>
+<div class="char-cell" style="background:rgb(197,167,35);color:#111" data-cp="U+2316" data-name="POSITION INDICATOR"><div class="char-display">⌖</div><div class="char-code">U+2316</div><div class="char-freq">18.1 K</div></div>
+<div class="char-cell" style="background:rgb(215,153,31);color:#111" data-cp="U+2317" data-name="VIEWDATA SQUARE"><div class="char-display">⌗</div><div class="char-code">U+2317</div><div class="char-freq">34.5 K</div></div>
+<div class="char-cell" style="background:rgb(130,10,10);color:#f0f0f0" data-cp="U+2318" data-name="PLACE OF INTEREST SIGN"><div class="char-display">⌘</div><div class="char-code">U+2318</div><div class="char-freq">1.4 M</div></div>
+<div class="char-cell" style="background:rgb(82,156,92);color:#f0f0f0" data-cp="U+2319" data-name="TURNED NOT SIGN"><div class="char-display">⌙</div><div class="char-code">U+2319</div><div class="char-freq">1.3 K</div></div>
+<div class="char-cell" style="background:rgb(196,63,20);color:#f0f0f0" data-cp="U+231A" data-name="WATCH"><div class="char-display">⌚</div><div class="char-code">U+231A</div><div class="char-freq">312.1 K</div></div>
+<div class="char-cell" style="background:rgb(202,75,20);color:#f0f0f0" data-cp="U+231B" data-name="HOURGLASS"><div class="char-display">⌛</div><div class="char-code">U+231B</div><div class="char-freq">237.0 K</div></div>
+<div class="char-cell" style="background:rgb(219,147,29);color:#111" data-cp="U+231C" data-name="TOP LEFT CORNER"><div class="char-display">⌜</div><div class="char-code">U+231C</div><div class="char-freq">43.6 K</div></div>
+<div class="char-cell" style="background:rgb(219,146,29);color:#111" data-cp="U+231D" data-name="TOP RIGHT CORNER"><div class="char-display">⌝</div><div class="char-code">U+231D</div><div class="char-freq">43.9 K</div></div>
+<div class="char-cell" style="background:rgb(155,176,49);color:#111" data-cp="U+231E" data-name="BOTTOM LEFT CORNER"><div class="char-display">⌞</div><div class="char-code">U+231E</div><div class="char-freq">6.5 K</div></div>
+<div class="char-cell" style="background:rgb(175,179,41);color:#111" data-cp="U+231F" data-name="BOTTOM RIGHT CORNER"><div class="char-display">⌟</div><div class="char-code">U+231F</div><div class="char-freq">9.1 K</div></div>
+<div class="char-cell" style="background:rgb(216,152,30);color:#111" data-cp="U+2320" data-name="TOP HALF INTEGRAL"><div class="char-display">⌠</div><div class="char-code">U+2320</div><div class="char-freq">36.4 K</div></div>
+<div class="char-cell" style="background:rgb(170,178,43);color:#111" data-cp="U+2321" data-name="BOTTOM HALF INTEGRAL"><div class="char-display">⌡</div><div class="char-code">U+2321</div><div class="char-freq">8.3 K</div></div>
+<div class="char-cell" style="background:rgb(108,171,66);color:#111" data-cp="U+2322" data-name="FROWN"><div class="char-display">⌢</div><div class="char-code">U+2322</div><div class="char-freq">2.8 K</div></div>
+<div class="char-cell" style="background:rgb(218,143,28);color:#111" data-cp="U+2323" data-name="SMILE"><div class="char-display">⌣</div><div class="char-code">U+2323</div><div class="char-freq">47.3 K</div></div>
+<div class="char-cell" style="background:rgb(81,156,92);color:#f0f0f0" data-cp="U+2324" data-name="UP ARROWHEAD BETWEEN TWO HORIZONTAL BARS"><div class="char-display">⌤</div><div class="char-code">U+2324</div><div class="char-freq">1.3 K</div></div>
+<div class="char-cell" style="background:rgb(202,74,20);color:#f0f0f0" data-cp="U+2325" data-name="OPTION KEY"><div class="char-display">⌥</div><div class="char-code">U+2325</div><div class="char-freq">240.5 K</div></div>
+<div class="char-cell" style="background:rgb(196,167,35);color:#111" data-cp="U+2326" data-name="ERASE TO THE RIGHT"><div class="char-display">⌦</div><div class="char-code">U+2326</div><div class="char-freq">17.8 K</div></div>
+<div class="char-cell" style="background:rgb(183,177,39);color:#111" data-cp="U+2327" data-name="X IN A RECTANGLE BOX"><div class="char-display">⌧</div><div class="char-code">U+2327</div><div class="char-freq">11.3 K</div></div>
+<div class="char-cell" style="background:rgb(212,102,22);color:#f0f0f0" data-cp="U+2328" data-name="KEYBOARD"><div class="char-display">⌨</div><div class="char-code">U+2328</div><div class="char-freq">126.6 K</div></div>
+<div class="char-cell" style="background:rgb(20,24,46);color:#f0f0f0" data-cp="U+2329" data-name="LEFT-POINTING ANGLE BRACKET"><div class="char-display">〈</div><div class="char-code">U+2329</div><div class="char-freq">0</div></div>
+<div class="char-cell" style="background:rgb(20,24,46);color:#f0f0f0" data-cp="U+232A" data-name="RIGHT-POINTING ANGLE BRACKET"><div class="char-display">〉</div><div class="char-code">U+232A</div><div class="char-freq">0</div></div>
+<div class="char-cell" style="background:rgb(196,167,35);color:#111" data-cp="U+232B" data-name="ERASE TO THE LEFT"><div class="char-display">⌫</div><div class="char-code">U+232B</div><div class="char-freq">17.6 K</div></div>
+<div class="char-cell" style="background:rgb(219,148,29);color:#111" data-cp="U+232C" data-name="BENZENE RING"><div class="char-display">⌬</div><div class="char-code">U+232C</div><div class="char-freq">42.7 K</div></div>
+<div class="char-cell" style="background:rgb(86,159,86);color:#f0f0f0" data-cp="U+232D" data-name="CYLINDRICITY"><div class="char-display">⌭</div><div class="char-code">U+232D</div><div class="char-freq">1.5 K</div></div>
+<div class="char-cell" style="background:rgb(53,118,128);color:#f0f0f0" data-cp="U+232E" data-name="ALL AROUND-PROFILE"><div class="char-display">⌮</div><div class="char-code">U+232E</div><div class="char-freq">232</div></div>
+<div class="char-cell" style="background:rgb(198,165,35);color:#111" data-cp="U+232F" data-name="SYMMETRY"><div class="char-display">⌯</div><div class="char-code">U+232F</div><div class="char-freq">19.2 K</div></div>
+<div class="char-cell" style="background:rgb(95,166,75);color:#f0f0f0" data-cp="U+2330" data-name="TOTAL RUNOUT"><div class="char-display">⌰</div><div class="char-code">U+2330</div><div class="char-freq">2.1 K</div></div>
+<div class="char-cell" style="background:rgb(59,139,120);color:#f0f0f0" data-cp="U+2331" data-name="DIMENSION ORIGIN"><div class="char-display">⌱</div><div class="char-code">U+2331</div><div class="char-freq">566</div></div>
+<div class="char-cell" style="background:rgb(203,162,34);color:#111" data-cp="U+2332" data-name="CONICAL TAPER"><div class="char-display">⌲</div><div class="char-code">U+2332</div><div class="char-freq">22.7 K</div></div>
+<div class="char-cell" style="background:rgb(85,159,87);color:#f0f0f0" data-cp="U+2333" data-name="SLOPE"><div class="char-display">⌳</div><div class="char-code">U+2333</div><div class="char-freq">1.4 K</div></div>
+<div class="char-cell" style="background:rgb(79,154,95);color:#f0f0f0" data-cp="U+2334" data-name="COUNTERBORE"><div class="char-display">⌴</div><div class="char-code">U+2334</div><div class="char-freq">1.2 K</div></div>
+<div class="char-cell" style="background:rgb(131,173,58);color:#111" data-cp="U+2335" data-name="COUNTERSINK"><div class="char-display">⌵</div><div class="char-code">U+2335</div><div class="char-freq">4.2 K</div></div>
+<div class="char-cell" style="background:rgb(74,150,102);color:#f0f0f0" data-cp="U+2336" data-name="APL FUNCTIONAL SYMBOL I-BEAM"><div class="char-display">⌶</div><div class="char-code">U+2336</div><div class="char-freq">963</div></div>
+<div class="char-cell" style="background:rgb(120,172,62);color:#111" data-cp="U+2337" data-name="APL FUNCTIONAL SYMBOL SQUISH QUAD"><div class="char-display">⌷</div><div class="char-code">U+2337</div><div class="char-freq">3.4 K</div></div>
+<div class="char-cell" style="background:rgb(86,159,87);color:#f0f0f0" data-cp="U+2338" data-name="APL FUNCTIONAL SYMBOL QUAD EQUAL"><div class="char-display">⌸</div><div class="char-code">U+2338</div><div class="char-freq">1.5 K</div></div>
+<div class="char-cell" style="background:rgb(81,156,93);color:#f0f0f0" data-cp="U+2339" data-name="APL FUNCTIONAL SYMBOL QUAD DIVIDE"><div class="char-display">⌹</div><div class="char-code">U+2339</div><div class="char-freq">1.3 K</div></div>
+<div class="char-cell" style="background:rgb(128,173,59);color:#111" data-cp="U+233A" data-name="APL FUNCTIONAL SYMBOL QUAD DIAMOND"><div class="char-display">⌺</div><div class="char-code">U+233A</div><div class="char-freq">4.0 K</div></div>
+<div class="char-cell" style="background:rgb(55,124,126);color:#f0f0f0" data-cp="U+233B" data-name="APL FUNCTIONAL SYMBOL QUAD JOT"><div class="char-display">⌻</div><div class="char-code">U+233B</div><div class="char-freq">308</div></div>
+<div class="char-cell" style="background:rgb(79,154,95);color:#f0f0f0" data-cp="U+233C" data-name="APL FUNCTIONAL SYMBOL QUAD CIRCLE"><div class="char-display">⌼</div><div class="char-code">U+233C</div><div class="char-freq">1.2 K</div></div>
+<div class="char-cell" style="background:rgb(183,177,39);color:#111" data-cp="U+233D" data-name="APL FUNCTIONAL SYMBOL CIRCLE STILE"><div class="char-display">⌽</div><div class="char-code">U+233D</div><div class="char-freq">11.1 K</div></div>
+<div class="char-cell" style="background:rgb(167,178,44);color:#111" data-cp="U+233E" data-name="APL FUNCTIONAL SYMBOL CIRCLE JOT"><div class="char-display">⌾</div><div class="char-code">U+233E</div><div class="char-freq">8.0 K</div></div>
+<div class="char-cell" style="background:rgb(136,174,56);color:#111" data-cp="U+233F" data-name="APL FUNCTIONAL SYMBOL SLASH BAR"><div class="char-display">⌿</div><div class="char-code">U+233F</div><div class="char-freq">4.6 K</div></div>
+<div class="char-cell" style="background:rgb(175,179,41);color:#111" data-cp="U+2340" data-name="APL FUNCTIONAL SYMBOL BACKSLASH BAR"><div class="char-display">⍀</div><div class="char-code">U+2340</div><div class="char-freq">9.2 K</div></div>
+<div class="char-cell" style="background:rgb(51,113,130);color:#f0f0f0" data-cp="U+2341" data-name="APL FUNCTIONAL SYMBOL QUAD SLASH"><div class="char-display">⍁</div><div class="char-code">U+2341</div><div class="char-freq">192</div></div>
+<div class="char-cell" style="background:rgb(54,124,126);color:#f0f0f0" data-cp="U+2342" data-name="APL FUNCTIONAL SYMBOL QUAD BACKSLASH"><div class="char-display">⍂</div><div class="char-code">U+2342</div><div class="char-freq">297</div></div>
+<div class="char-cell" style="background:rgb(57,132,122);color:#f0f0f0" data-cp="U+2343" data-name="APL FUNCTIONAL SYMBOL QUAD LESS-THAN"><div class="char-display">⍃</div><div class="char-code">U+2343</div><div class="char-freq">431</div></div>
+<div class="char-cell" style="background:rgb(64,143,114);color:#f0f0f0" data-cp="U+2344" data-name="APL FUNCTIONAL SYMBOL QUAD GREATER-THAN"><div class="char-display">⍄</div><div class="char-code">U+2344</div><div class="char-freq">677</div></div>
+<div class="char-cell" style="background:rgb(55,127,125);color:#f0f0f0" data-cp="U+2345" data-name="APL FUNCTIONAL SYMBOL LEFTWARDS VANE"><div class="char-display">⍅</div><div class="char-code">U+2345</div><div class="char-freq">337</div></div>
+<div class="char-cell" style="background:rgb(78,153,97);color:#f0f0f0" data-cp="U+2346" data-name="APL FUNCTIONAL SYMBOL RIGHTWARDS VANE"><div class="char-display">⍆</div><div class="char-code">U+2346</div><div class="char-freq">1.1 K</div></div>
+<div class="char-cell" style="background:rgb(59,139,120);color:#f0f0f0" data-cp="U+2347" data-name="APL FUNCTIONAL SYMBOL QUAD LEFTWARDS ARROW"><div class="char-display">⍇</div><div class="char-code">U+2347</div><div class="char-freq">578</div></div>
+<div class="char-cell" style="background:rgb(79,154,96);color:#f0f0f0" data-cp="U+2348" data-name="APL FUNCTIONAL SYMBOL QUAD RIGHTWARDS ARROW"><div class="char-display">⍈</div><div class="char-code">U+2348</div><div class="char-freq">1.1 K</div></div>
+<div class="char-cell" style="background:rgb(132,174,57);color:#111" data-cp="U+2349" data-name="APL FUNCTIONAL SYMBOL CIRCLE BACKSLASH"><div class="char-display">⍉</div><div class="char-code">U+2349</div><div class="char-freq">4.3 K</div></div>
+<div class="char-cell" style="background:rgb(59,138,120);color:#f0f0f0" data-cp="U+234A" data-name="APL FUNCTIONAL SYMBOL DOWN TACK UNDERBAR"><div class="char-display">⍊</div><div class="char-code">U+234A</div><div class="char-freq">543</div></div>
+<div class="char-cell" style="background:rgb(104,170,68);color:#f0f0f0" data-cp="U+234B" data-name="APL FUNCTIONAL SYMBOL DELTA STILE"><div class="char-display">⍋</div><div class="char-code">U+234B</div><div class="char-freq">2.6 K</div></div>
+<div class="char-cell" style="background:rgb(68,146,108);color:#f0f0f0" data-cp="U+234C" data-name="APL FUNCTIONAL SYMBOL QUAD DOWN CARET"><div class="char-display">⍌</div><div class="char-code">U+234C</div><div class="char-freq">802</div></div>
+<div class="char-cell" style="background:rgb(51,113,130);color:#f0f0f0" data-cp="U+234D" data-name="APL FUNCTIONAL SYMBOL QUAD DELTA"><div class="char-display">⍍</div><div class="char-code">U+234D</div><div class="char-freq">191</div></div>
+<div class="char-cell" style="background:rgb(77,153,97);color:#f0f0f0" data-cp="U+234E" data-name="APL FUNCTIONAL SYMBOL DOWN TACK JOT"><div class="char-display">⍎</div><div class="char-code">U+234E</div><div class="char-freq">1.1 K</div></div>
+<div class="char-cell" style="background:rgb(81,155,93);color:#f0f0f0" data-cp="U+234F" data-name="APL FUNCTIONAL SYMBOL UPWARDS VANE"><div class="char-display">⍏</div><div class="char-code">U+234F</div><div class="char-freq">1.2 K</div></div>
+<div class="char-cell" style="background:rgb(56,128,124);color:#f0f0f0" data-cp="U+2350" data-name="APL FUNCTIONAL SYMBOL QUAD UPWARDS ARROW"><div class="char-display">⍐</div><div class="char-code">U+2350</div><div class="char-freq">362</div></div>
+<div class="char-cell" style="background:rgb(60,140,119);color:#f0f0f0" data-cp="U+2351" data-name="APL FUNCTIONAL SYMBOL UP TACK OVERBAR"><div class="char-display">⍑</div><div class="char-code">U+2351</div><div class="char-freq">584</div></div>
+<div class="char-cell" style="background:rgb(87,160,86);color:#f0f0f0" data-cp="U+2352" data-name="APL FUNCTIONAL SYMBOL DEL STILE"><div class="char-display">⍒</div><div class="char-code">U+2352</div><div class="char-freq">1.5 K</div></div>
+<div class="char-cell" style="background:rgb(77,152,98);color:#f0f0f0" data-cp="U+2353" data-name="APL FUNCTIONAL SYMBOL QUAD UP CARET"><div class="char-display">⍓</div><div class="char-code">U+2353</div><div class="char-freq">1.1 K</div></div>
+<div class="char-cell" style="background:rgb(54,121,127);color:#f0f0f0" data-cp="U+2354" data-name="APL FUNCTIONAL SYMBOL QUAD DEL"><div class="char-display">⍔</div><div class="char-code">U+2354</div><div class="char-freq">270</div></div>
+<div class="char-cell" style="background:rgb(123,172,61);color:#111" data-cp="U+2355" data-name="APL FUNCTIONAL SYMBOL UP TACK JOT"><div class="char-display">⍕</div><div class="char-code">U+2355</div><div class="char-freq">3.6 K</div></div>
+<div class="char-cell" style="background:rgb(55,125,125);color:#f0f0f0" data-cp="U+2356" data-name="APL FUNCTIONAL SYMBOL DOWNWARDS VANE"><div class="char-display">⍖</div><div class="char-code">U+2356</div><div class="char-freq">316</div></div>
+<div class="char-cell" style="background:rgb(52,115,129);color:#f0f0f0" data-cp="U+2357" data-name="APL FUNCTIONAL SYMBOL QUAD DOWNWARDS ARROW"><div class="char-display">⍗</div><div class="char-code">U+2357</div><div class="char-freq">203</div></div>
+<div class="char-cell" style="background:rgb(57,131,123);color:#f0f0f0" data-cp="U+2358" data-name="APL FUNCTIONAL SYMBOL QUOTE UNDERBAR"><div class="char-display">⍘</div><div class="char-code">U+2358</div><div class="char-freq">402</div></div>
+<div class="char-cell" style="background:rgb(106,170,67);color:#f0f0f0" data-cp="U+2359" data-name="APL FUNCTIONAL SYMBOL DELTA UNDERBAR"><div class="char-display">⍙</div><div class="char-code">U+2359</div><div class="char-freq">2.7 K</div></div>
+<div class="char-cell" style="background:rgb(93,165,77);color:#f0f0f0" data-cp="U+235A" data-name="APL FUNCTIONAL SYMBOL DIAMOND UNDERBAR"><div class="char-display">⍚</div><div class="char-code">U+235A</div><div class="char-freq">1.9 K</div></div>
+<div class="char-cell" style="background:rgb(80,155,94);color:#f0f0f0" data-cp="U+235B" data-name="APL FUNCTIONAL SYMBOL JOT UNDERBAR"><div class="char-display">⍛</div><div class="char-code">U+235B</div><div class="char-freq">1.2 K</div></div>
+<div class="char-cell" style="background:rgb(114,171,64);color:#111" data-cp="U+235C" data-name="APL FUNCTIONAL SYMBOL CIRCLE UNDERBAR"><div class="char-display">⍜</div><div class="char-code">U+235C</div><div class="char-freq">3.1 K</div></div>
+<div class="char-cell" style="background:rgb(192,170,36);color:#111" data-cp="U+235D" data-name="APL FUNCTIONAL SYMBOL UP SHOE JOT"><div class="char-display">⍝</div><div class="char-code">U+235D</div><div class="char-freq">15.6 K</div></div>
+<div class="char-cell" style="background:rgb(71,148,105);color:#f0f0f0" data-cp="U+235E" data-name="APL FUNCTIONAL SYMBOL QUOTE QUAD"><div class="char-display">⍞</div><div class="char-code">U+235E</div><div class="char-freq">876</div></div>
+<div class="char-cell" style="background:rgb(216,127,26);color:#111" data-cp="U+235F" data-name="APL FUNCTIONAL SYMBOL CIRCLE STAR"><div class="char-display">⍟</div><div class="char-code">U+235F</div><div class="char-freq">68.7 K</div></div>
+<div class="char-cell" style="background:rgb(53,120,127);color:#f0f0f0" data-cp="U+2360" data-name="APL FUNCTIONAL SYMBOL QUAD COLON"><div class="char-display">⍠</div><div class="char-code">U+2360</div><div class="char-freq">249</div></div>
+<div class="char-cell" style="background:rgb(55,125,125);color:#f0f0f0" data-cp="U+2361" data-name="APL FUNCTIONAL SYMBOL UP TACK DIAERESIS"><div class="char-display">⍡</div><div class="char-code">U+2361</div><div class="char-freq">313</div></div>
+<div class="char-cell" style="background:rgb(116,172,63);color:#111" data-cp="U+2362" data-name="APL FUNCTIONAL SYMBOL DEL DIAERESIS"><div class="char-display">⍢</div><div class="char-code">U+2362</div><div class="char-freq">3.2 K</div></div>
+<div class="char-cell" style="background:rgb(177,179,41);color:#111" data-cp="U+2363" data-name="APL FUNCTIONAL SYMBOL STAR DIAERESIS"><div class="char-display">⍣</div><div class="char-code">U+2363</div><div class="char-freq">9.4 K</div></div>
+<div class="char-cell" style="background:rgb(149,176,51);color:#111" data-cp="U+2364" data-name="APL FUNCTIONAL SYMBOL JOT DIAERESIS"><div class="char-display">⍤</div><div class="char-code">U+2364</div><div class="char-freq">5.7 K</div></div>
+<div class="char-cell" style="background:rgb(91,163,80);color:#f0f0f0" data-cp="U+2365" data-name="APL FUNCTIONAL SYMBOL CIRCLE DIAERESIS"><div class="char-display">⍥</div><div class="char-code">U+2365</div><div class="char-freq">1.8 K</div></div>
+<div class="char-cell" style="background:rgb(79,154,95);color:#f0f0f0" data-cp="U+2366" data-name="APL FUNCTIONAL SYMBOL DOWN SHOE STILE"><div class="char-display">⍦</div><div class="char-code">U+2366</div><div class="char-freq">1.2 K</div></div>
+<div class="char-cell" style="background:rgb(70,148,106);color:#f0f0f0" data-cp="U+2367" data-name="APL FUNCTIONAL SYMBOL LEFT SHOE STILE"><div class="char-display">⍧</div><div class="char-code">U+2367</div><div class="char-freq">859</div></div>
+<div class="char-cell" style="background:rgb(115,171,64);color:#111" data-cp="U+2368" data-name="APL FUNCTIONAL SYMBOL TILDE DIAERESIS"><div class="char-display">⍨</div><div class="char-code">U+2368</div><div class="char-freq">3.2 K</div></div>
+<div class="char-cell" style="background:rgb(70,147,107);color:#f0f0f0" data-cp="U+2369" data-name="APL FUNCTIONAL SYMBOL GREATER-THAN DIAERESIS"><div class="char-display">⍩</div><div class="char-code">U+2369</div><div class="char-freq">837</div></div>
+<div class="char-cell" style="background:rgb(59,138,120);color:#f0f0f0" data-cp="U+236A" data-name="APL FUNCTIONAL SYMBOL COMMA BAR"><div class="char-display">⍪</div><div class="char-code">U+236A</div><div class="char-freq">550</div></div>
+<div class="char-cell" style="background:rgb(58,136,121);color:#f0f0f0" data-cp="U+236B" data-name="APL FUNCTIONAL SYMBOL DEL TILDE"><div class="char-display">⍫</div><div class="char-code">U+236B</div><div class="char-freq">501</div></div>
+<div class="char-cell" style="background:rgb(91,163,81);color:#f0f0f0" data-cp="U+236C" data-name="APL FUNCTIONAL SYMBOL ZILDE"><div class="char-display">⍬</div><div class="char-code">U+236C</div><div class="char-freq">1.8 K</div></div>
+<div class="char-cell" style="background:rgb(91,163,80);color:#f0f0f0" data-cp="U+236D" data-name="APL FUNCTIONAL SYMBOL STILE TILDE"><div class="char-display">⍭</div><div class="char-code">U+236D</div><div class="char-freq">1.8 K</div></div>
+<div class="char-cell" style="background:rgb(53,119,128);color:#f0f0f0" data-cp="U+236E" data-name="APL FUNCTIONAL SYMBOL SEMICOLON UNDERBAR"><div class="char-display">⍮</div><div class="char-code">U+236E</div><div class="char-freq">244</div></div>
+<div class="char-cell" style="background:rgb(53,120,127);color:#f0f0f0" data-cp="U+236F" data-name="APL FUNCTIONAL SYMBOL QUAD NOT EQUAL"><div class="char-display">⍯</div><div class="char-code">U+236F</div><div class="char-freq">253</div></div>
+<div class="char-cell" style="background:rgb(168,178,44);color:#111" data-cp="U+2370" data-name="APL FUNCTIONAL SYMBOL QUAD QUESTION"><div class="char-display">⍰</div><div class="char-code">U+2370</div><div class="char-freq">8.1 K</div></div>
+<div class="char-cell" style="background:rgb(79,154,95);color:#f0f0f0" data-cp="U+2371" data-name="APL FUNCTIONAL SYMBOL DOWN CARET TILDE"><div class="char-display">⍱</div><div class="char-code">U+2371</div><div class="char-freq">1.2 K</div></div>
+<div class="char-cell" style="background:rgb(86,160,86);color:#f0f0f0" data-cp="U+2372" data-name="APL FUNCTIONAL SYMBOL UP CARET TILDE"><div class="char-display">⍲</div><div class="char-code">U+2372</div><div class="char-freq">1.5 K</div></div>
+<div class="char-cell" style="background:rgb(191,171,37);color:#111" data-cp="U+2373" data-name="APL FUNCTIONAL SYMBOL IOTA"><div class="char-display">⍳</div><div class="char-code">U+2373</div><div class="char-freq">15.1 K</div></div>
+<div class="char-cell" style="background:rgb(207,159,33);color:#111" data-cp="U+2374" data-name="APL FUNCTIONAL SYMBOL RHO"><div class="char-display">⍴</div><div class="char-code">U+2374</div><div class="char-freq">26.2 K</div></div>
+<div class="char-cell" style="background:rgb(198,166,35);color:#111" data-cp="U+2375" data-name="APL FUNCTIONAL SYMBOL OMEGA"><div class="char-display">⍵</div><div class="char-code">U+2375</div><div class="char-freq">19.1 K</div></div>
+<div class="char-cell" style="background:rgb(59,139,120);color:#f0f0f0" data-cp="U+2376" data-name="APL FUNCTIONAL SYMBOL ALPHA UNDERBAR"><div class="char-display">⍶</div><div class="char-code">U+2376</div><div class="char-freq">569</div></div>
+<div class="char-cell" style="background:rgb(65,143,113);color:#f0f0f0" data-cp="U+2377" data-name="APL FUNCTIONAL SYMBOL EPSILON UNDERBAR"><div class="char-display">⍷</div><div class="char-code">U+2377</div><div class="char-freq">701</div></div>
+<div class="char-cell" style="background:rgb(65,144,113);color:#f0f0f0" data-cp="U+2378" data-name="APL FUNCTIONAL SYMBOL IOTA UNDERBAR"><div class="char-display">⍸</div><div class="char-code">U+2378</div><div class="char-freq">710</div></div>
+<div class="char-cell" style="background:rgb(56,128,124);color:#f0f0f0" data-cp="U+2379" data-name="APL FUNCTIONAL SYMBOL OMEGA UNDERBAR"><div class="char-display">⍹</div><div class="char-code">U+2379</div><div class="char-freq">354</div></div>
+<div class="char-cell" style="background:rgb(218,141,28);color:#111" data-cp="U+237A" data-name="APL FUNCTIONAL SYMBOL ALPHA"><div class="char-display">⍺</div><div class="char-code">U+237A</div><div class="char-freq">49.9 K</div></div>
+<div class="char-cell" style="background:rgb(150,176,50);color:#111" data-cp="U+237B" data-name="NOT CHECK MARK"><div class="char-display">⍻</div><div class="char-code">U+237B</div><div class="char-freq">5.9 K</div></div>
+<div class="char-cell" style="background:rgb(69,147,107);color:#f0f0f0" data-cp="U+237C" data-name="RIGHT ANGLE WITH DOWNWARDS ZIGZAG ARROW"><div class="char-display">⍼</div><div class="char-code">U+237C</div><div class="char-freq">825</div></div>
+<div class="char-cell" style="background:rgb(204,161,33);color:#111" data-cp="U+237D" data-name="SHOULDERED OPEN BOX"><div class="char-display">⍽</div><div class="char-code">U+237D</div><div class="char-freq">23.8 K</div></div>
+<div class="char-cell" style="background:rgb(83,157,90);color:#f0f0f0" data-cp="U+237E" data-name="BELL SYMBOL"><div class="char-display">⍾</div><div class="char-code">U+237E</div><div class="char-freq">1.3 K</div></div>
+<div class="char-cell" style="background:rgb(53,118,128);color:#f0f0f0" data-cp="U+237F" data-name="VERTICAL LINE WITH MIDDLE DOT"><div class="char-display">⍿</div><div class="char-code">U+237F</div><div class="char-freq">238</div></div>
+<div class="char-cell" style="background:rgb(56,130,123);color:#f0f0f0" data-cp="U+2380" data-name="INSERTION SYMBOL"><div class="char-display">⎀</div><div class="char-code">U+2380</div><div class="char-freq">383</div></div>
+<div class="char-cell" style="background:rgb(44,92,138);color:#f0f0f0" data-cp="U+2381" data-name="CONTINUOUS UNDERLINE SYMBOL"><div class="char-display">⎁</div><div class="char-code">U+2381</div><div class="char-freq">78</div></div>
+<div class="char-cell" style="background:rgb(40,78,128);color:#f0f0f0" data-cp="U+2382" data-name="DISCONTINUOUS UNDERLINE SYMBOL"><div class="char-display">⎂</div><div class="char-code">U+2382</div><div class="char-freq">36</div></div>
+<div class="char-cell" style="background:rgb(66,145,111);color:#f0f0f0" data-cp="U+2383" data-name="EMPHASIS SYMBOL"><div class="char-display">⎃</div><div class="char-code">U+2383</div><div class="char-freq">743</div></div>
+<div class="char-cell" style="background:rgb(75,151,101);color:#f0f0f0" data-cp="U+2384" data-name="COMPOSITION SYMBOL"><div class="char-display">⎄</div><div class="char-code">U+2384</div><div class="char-freq">999</div></div>
+<div class="char-cell" style="background:rgb(77,152,98);color:#f0f0f0" data-cp="U+2385" data-name="WHITE SQUARE WITH CENTRE VERTICAL LINE"><div class="char-display">⎅</div><div class="char-code">U+2385</div><div class="char-freq">1.1 K</div></div>
+<div class="char-cell" style="background:rgb(198,166,35);color:#111" data-cp="U+2386" data-name="ENTER SYMBOL"><div class="char-display">⎆</div><div class="char-code">U+2386</div><div class="char-freq">18.9 K</div></div>
+<div class="char-cell" style="background:rgb(172,179,42);color:#111" data-cp="U+2387" data-name="ALTERNATIVE KEY SYMBOL"><div class="char-display">⎇</div><div class="char-code">U+2387</div><div class="char-freq">8.6 K</div></div>
+<div class="char-cell" style="background:rgb(212,155,31);color:#111" data-cp="U+2388" data-name="HELM SYMBOL"><div class="char-display">⎈</div><div class="char-code">U+2388</div><div class="char-freq">31.2 K</div></div>
+<div class="char-cell" style="background:rgb(64,143,114);color:#f0f0f0" data-cp="U+2389" data-name="CIRCLED HORIZONTAL BAR WITH NOTCH"><div class="char-display">⎉</div><div class="char-code">U+2389</div><div class="char-freq">687</div></div>
+<div class="char-cell" style="background:rgb(168,178,44);color:#111" data-cp="U+238A" data-name="CIRCLED TRIANGLE DOWN"><div class="char-display">⎊</div><div class="char-code">U+238A</div><div class="char-freq">8.2 K</div></div>
+<div class="char-cell" style="background:rgb(186,175,38);color:#111" data-cp="U+238B" data-name="BROKEN CIRCLE WITH NORTHWEST ARROW"><div class="char-display">⎋</div><div class="char-code">U+238B</div><div class="char-freq">12.3 K</div></div>
+<div class="char-cell" style="background:rgb(88,161,84);color:#f0f0f0" data-cp="U+238C" data-name="UNDO SYMBOL"><div class="char-display">⎌</div><div class="char-code">U+238C</div><div class="char-freq">1.6 K</div></div>
+<div class="char-cell" style="background:rgb(84,158,89);color:#f0f0f0" data-cp="U+238D" data-name="MONOSTABLE SYMBOL"><div class="char-display">⎍</div><div class="char-code">U+238D</div><div class="char-freq">1.4 K</div></div>
+<div class="char-cell" style="background:rgb(57,132,123);color:#f0f0f0" data-cp="U+238E" data-name="HYSTERESIS SYMBOL"><div class="char-display">⎎</div><div class="char-code">U+238E</div><div class="char-freq">422</div></div>
+<div class="char-cell" style="background:rgb(50,110,131);color:#f0f0f0" data-cp="U+238F" data-name="OPEN-CIRCUIT-OUTPUT H-TYPE SYMBOL"><div class="char-display">⎏</div><div class="char-code">U+238F</div><div class="char-freq">165</div></div>
+<div class="char-cell" style="background:rgb(63,142,116);color:#f0f0f0" data-cp="U+2390" data-name="OPEN-CIRCUIT-OUTPUT L-TYPE SYMBOL"><div class="char-display">⎐</div><div class="char-code">U+2390</div><div class="char-freq">652</div></div>
+<div class="char-cell" style="background:rgb(49,107,132);color:#f0f0f0" data-cp="U+2391" data-name="PASSIVE-PULL-DOWN-OUTPUT SYMBOL"><div class="char-display">⎑</div><div class="char-code">U+2391</div><div class="char-freq">149</div></div>
+<div class="char-cell" style="background:rgb(50,111,131);color:#f0f0f0" data-cp="U+2392" data-name="PASSIVE-PULL-UP-OUTPUT SYMBOL"><div class="char-display">⎒</div><div class="char-code">U+2392</div><div class="char-freq">170</div></div>
+<div class="char-cell" style="background:rgb(216,127,26);color:#111" data-cp="U+2393" data-name="DIRECT CURRENT SYMBOL FORM TWO"><div class="char-display">⎓</div><div class="char-code">U+2393</div><div class="char-freq">70.0 K</div></div>
+<div class="char-cell" style="background:rgb(188,173,37);color:#111" data-cp="U+2394" data-name="SOFTWARE-FUNCTION SYMBOL"><div class="char-display">⎔</div><div class="char-code">U+2394</div><div class="char-freq">13.4 K</div></div>
+<div class="char-cell" style="background:rgb(216,152,30);color:#111" data-cp="U+2395" data-name="APL FUNCTIONAL SYMBOL QUAD"><div class="char-display">⎕</div><div class="char-code">U+2395</div><div class="char-freq">36.1 K</div></div>
+<div class="char-cell" style="background:rgb(121,172,61);color:#111" data-cp="U+2396" data-name="DECIMAL SEPARATOR KEY SYMBOL"><div class="char-display">⎖</div><div class="char-code">U+2396</div><div class="char-freq">3.5 K</div></div>
+<div class="char-cell" style="background:rgb(67,145,111);color:#f0f0f0" data-cp="U+2397" data-name="PREVIOUS PAGE"><div class="char-display">⎗</div><div class="char-code">U+2397</div><div class="char-freq">749</div></div>
+<div class="char-cell" style="background:rgb(104,170,68);color:#f0f0f0" data-cp="U+2398" data-name="NEXT PAGE"><div class="char-display">⎘</div><div class="char-code">U+2398</div><div class="char-freq">2.6 K</div></div>
+<div class="char-cell" style="background:rgb(198,166,35);color:#111" data-cp="U+2399" data-name="PRINT SCREEN SYMBOL"><div class="char-display">⎙</div><div class="char-code">U+2399</div><div class="char-freq">19.0 K</div></div>
+<div class="char-cell" style="background:rgb(89,162,83);color:#f0f0f0" data-cp="U+239A" data-name="CLEAR SCREEN SYMBOL"><div class="char-display">⎚</div><div class="char-code">U+239A</div><div class="char-freq">1.7 K</div></div>
+<div class="char-cell" style="background:rgb(217,136,27);color:#111" data-cp="U+239B" data-name="LEFT PARENTHESIS UPPER HOOK"><div class="char-display">⎛</div><div class="char-code">U+239B</div><div class="char-freq">55.5 K</div></div>
+<div class="char-cell" style="background:rgb(211,98,21);color:#f0f0f0" data-cp="U+239C" data-name="LEFT PARENTHESIS EXTENSION"><div class="char-display">⎜</div><div class="char-code">U+239C</div><div class="char-freq">138.0 K</div></div>
+<div class="char-cell" style="background:rgb(218,138,28);color:#111" data-cp="U+239D" data-name="LEFT PARENTHESIS LOWER HOOK"><div class="char-display">⎝</div><div class="char-code">U+239D</div><div class="char-freq">54.0 K</div></div>
+<div class="char-cell" style="background:rgb(218,143,28);color:#111" data-cp="U+239E" data-name="RIGHT PARENTHESIS UPPER HOOK"><div class="char-display">⎞</div><div class="char-code">U+239E</div><div class="char-freq">47.4 K</div></div>
+<div class="char-cell" style="background:rgb(215,124,25);color:#f0f0f0" data-cp="U+239F" data-name="RIGHT PARENTHESIS EXTENSION"><div class="char-display">⎟</div><div class="char-code">U+239F</div><div class="char-freq">73.7 K</div></div>
+<div class="char-cell" style="background:rgb(218,138,28);color:#111" data-cp="U+23A0" data-name="RIGHT PARENTHESIS LOWER HOOK"><div class="char-display">⎠</div><div class="char-code">U+23A0</div><div class="char-freq">53.8 K</div></div>
+<div class="char-cell" style="background:rgb(209,157,32);color:#111" data-cp="U+23A1" data-name="LEFT SQUARE BRACKET UPPER CORNER"><div class="char-display">⎡</div><div class="char-code">U+23A1</div><div class="char-freq">28.6 K</div></div>
+<div class="char-cell" style="background:rgb(218,138,28);color:#111" data-cp="U+23A2" data-name="LEFT SQUARE BRACKET EXTENSION"><div class="char-display">⎢</div><div class="char-code">U+23A2</div><div class="char-freq">53.2 K</div></div>
+<div class="char-cell" style="background:rgb(205,160,33);color:#111" data-cp="U+23A3" data-name="LEFT SQUARE BRACKET LOWER CORNER"><div class="char-display">⎣</div><div class="char-code">U+23A3</div><div class="char-freq">24.8 K</div></div>
+<div class="char-cell" style="background:rgb(203,162,34);color:#111" data-cp="U+23A4" data-name="RIGHT SQUARE BRACKET UPPER CORNER"><div class="char-display">⎤</div><div class="char-code">U+23A4</div><div class="char-freq">23.0 K</div></div>
+<div class="char-cell" style="background:rgb(219,144,29);color:#111" data-cp="U+23A5" data-name="RIGHT SQUARE BRACKET EXTENSION"><div class="char-display">⎥</div><div class="char-code">U+23A5</div><div class="char-freq">46.4 K</div></div>
+<div class="char-cell" style="background:rgb(203,162,34);color:#111" data-cp="U+23A6" data-name="RIGHT SQUARE BRACKET LOWER CORNER"><div class="char-display">⎦</div><div class="char-code">U+23A6</div><div class="char-freq">22.4 K</div></div>
+<div class="char-cell" style="background:rgb(161,177,46);color:#111" data-cp="U+23A7" data-name="LEFT CURLY BRACKET UPPER HOOK"><div class="char-display">⎧</div><div class="char-code">U+23A7</div><div class="char-freq">7.2 K</div></div>
+<div class="char-cell" style="background:rgb(162,177,46);color:#111" data-cp="U+23A8" data-name="LEFT CURLY BRACKET MIDDLE PIECE"><div class="char-display">⎨</div><div class="char-code">U+23A8</div><div class="char-freq">7.3 K</div></div>
+<div class="char-cell" style="background:rgb(156,177,48);color:#111" data-cp="U+23A9" data-name="LEFT CURLY BRACKET LOWER HOOK"><div class="char-display">⎩</div><div class="char-code">U+23A9</div><div class="char-freq">6.6 K</div></div>
+<div class="char-cell" style="background:rgb(214,116,24);color:#f0f0f0" data-cp="U+23AA" data-name="CURLY BRACKET EXTENSION"><div class="char-display">⎪</div><div class="char-code">U+23AA</div><div class="char-freq">90.1 K</div></div>
+<div class="char-cell" style="background:rgb(219,148,29);color:#111" data-cp="U+23AB" data-name="RIGHT CURLY BRACKET UPPER HOOK"><div class="char-display">⎫</div><div class="char-code">U+23AB</div><div class="char-freq">41.9 K</div></div>
+<div class="char-cell" style="background:rgb(140,175,54);color:#111" data-cp="U+23AC" data-name="RIGHT CURLY BRACKET MIDDLE PIECE"><div class="char-display">⎬</div><div class="char-code">U+23AC</div><div class="char-freq">4.9 K</div></div>
+<div class="char-cell" style="background:rgb(131,173,58);color:#111" data-cp="U+23AD" data-name="RIGHT CURLY BRACKET LOWER HOOK"><div class="char-display">⎭</div><div class="char-code">U+23AD</div><div class="char-freq">4.2 K</div></div>
+<div class="char-cell" style="background:rgb(212,106,22);color:#f0f0f0" data-cp="U+23AE" data-name="INTEGRAL EXTENSION"><div class="char-display">⎮</div><div class="char-code">U+23AE</div><div class="char-freq">113.2 K</div></div>
+<div class="char-cell" style="background:rgb(180,30,20);color:#f0f0f0" data-cp="U+23AF" data-name="HORIZONTAL LINE EXTENSION"><div class="char-display">⎯</div><div class="char-code">U+23AF</div><div class="char-freq">692.9 K</div></div>
+<div class="char-cell" style="background:rgb(82,157,91);color:#f0f0f0" data-cp="U+23B0" data-name="UPPER LEFT OR LOWER RIGHT CURLY BRACKET SECTION"><div class="char-display">⎰</div><div class="char-code">U+23B0</div><div class="char-freq">1.3 K</div></div>
+<div class="char-cell" style="background:rgb(68,146,109);color:#f0f0f0" data-cp="U+23B1" data-name="UPPER RIGHT OR LOWER LEFT CURLY BRACKET SECTION"><div class="char-display">⎱</div><div class="char-code">U+23B1</div><div class="char-freq">777</div></div>
+<div class="char-cell" style="background:rgb(59,139,120);color:#f0f0f0" data-cp="U+23B2" data-name="SUMMATION TOP"><div class="char-display">⎲</div><div class="char-code">U+23B2</div><div class="char-freq">560</div></div>
+<div class="char-cell" style="background:rgb(68,146,109);color:#f0f0f0" data-cp="U+23B3" data-name="SUMMATION BOTTOM"><div class="char-display">⎳</div><div class="char-code">U+23B3</div><div class="char-freq">794</div></div>
+<div class="char-cell" style="background:rgb(53,120,127);color:#f0f0f0" data-cp="U+23B4" data-name="TOP SQUARE BRACKET"><div class="char-display">⎴</div><div class="char-code">U+23B4</div><div class="char-freq">257</div></div>
+<div class="char-cell" style="background:rgb(94,165,76);color:#f0f0f0" data-cp="U+23B5" data-name="BOTTOM SQUARE BRACKET"><div class="char-display">⎵</div><div class="char-code">U+23B5</div><div class="char-freq">2.0 K</div></div>
+<div class="char-cell" style="background:rgb(50,109,132);color:#f0f0f0" data-cp="U+23B6" data-name="BOTTOM SQUARE BRACKET OVER TOP SQUARE BRACKET"><div class="char-display">⎶</div><div class="char-code">U+23B6</div><div class="char-freq">156</div></div>
+<div class="char-cell" style="background:rgb(190,171,37);color:#111" data-cp="U+23B7" data-name="RADICAL SYMBOL BOTTOM"><div class="char-display">⎷</div><div class="char-code">U+23B7</div><div class="char-freq">14.5 K</div></div>
+<div class="char-cell" style="background:rgb(183,177,39);color:#111" data-cp="U+23B8" data-name="LEFT VERTICAL BOX LINE"><div class="char-display">⎸</div><div class="char-code">U+23B8</div><div class="char-freq">11.1 K</div></div>
+<div class="char-cell" style="background:rgb(167,178,44);color:#111" data-cp="U+23B9" data-name="RIGHT VERTICAL BOX LINE"><div class="char-display">⎹</div><div class="char-code">U+23B9</div><div class="char-freq">7.9 K</div></div>
+<div class="char-cell" style="background:rgb(191,171,37);color:#111" data-cp="U+23BA" data-name="HORIZONTAL SCAN LINE-1"><div class="char-display">⎺</div><div class="char-code">U+23BA</div><div class="char-freq">15.0 K</div></div>
+<div class="char-cell" style="background:rgb(163,177,46);color:#111" data-cp="U+23BB" data-name="HORIZONTAL SCAN LINE-3"><div class="char-display">⎻</div><div class="char-code">U+23BB</div><div class="char-freq">7.4 K</div></div>
+<div class="char-cell" style="background:rgb(216,129,26);color:#111" data-cp="U+23BC" data-name="HORIZONTAL SCAN LINE-7"><div class="char-display">⎼</div><div class="char-code">U+23BC</div><div class="char-freq">65.8 K</div></div>
+<div class="char-cell" style="background:rgb(98,169,71);color:#f0f0f0" data-cp="U+23BD" data-name="HORIZONTAL SCAN LINE-9"><div class="char-display">⎽</div><div class="char-code">U+23BD</div><div class="char-freq">2.3 K</div></div>
+<div class="char-cell" style="background:rgb(70,148,106);color:#f0f0f0" data-cp="U+23BE" data-name="DENTISTRY SYMBOL LIGHT VERTICAL AND TOP RIGHT"><div class="char-display">⎾</div><div class="char-code">U+23BE</div><div class="char-freq">852</div></div>
+<div class="char-cell" style="background:rgb(60,140,119);color:#f0f0f0" data-cp="U+23BF" data-name="DENTISTRY SYMBOL LIGHT VERTICAL AND BOTTOM RIGHT"><div class="char-display">⎿</div><div class="char-code">U+23BF</div><div class="char-freq">593</div></div>
+<div class="char-cell" style="background:rgb(122,172,61);color:#111" data-cp="U+23C0" data-name="DENTISTRY SYMBOL LIGHT VERTICAL WITH CIRCLE"><div class="char-display">⏀</div><div class="char-code">U+23C0</div><div class="char-freq">3.6 K</div></div>
+<div class="char-cell" style="background:rgb(99,169,70);color:#f0f0f0" data-cp="U+23C1" data-name="DENTISTRY SYMBOL LIGHT DOWN AND HORIZONTAL WITH CIRCLE"><div class="char-display">⏁</div><div class="char-code">U+23C1</div><div class="char-freq">2.4 K</div></div>
+<div class="char-cell" style="background:rgb(58,133,122);color:#f0f0f0" data-cp="U+23C2" data-name="DENTISTRY SYMBOL LIGHT UP AND HORIZONTAL WITH CIRCLE"><div class="char-display">⏂</div><div class="char-code">U+23C2</div><div class="char-freq">450</div></div>
+<div class="char-cell" style="background:rgb(155,176,49);color:#111" data-cp="U+23C3" data-name="DENTISTRY SYMBOL LIGHT VERTICAL WITH TRIANGLE"><div class="char-display">⏃</div><div class="char-code">U+23C3</div><div class="char-freq">6.4 K</div></div>
+<div class="char-cell" style="background:rgb(57,133,122);color:#f0f0f0" data-cp="U+23C4" data-name="DENTISTRY SYMBOL LIGHT DOWN AND HORIZONTAL WITH TRIANGLE"><div class="char-display">⏄</div><div class="char-code">U+23C4</div><div class="char-freq">436</div></div>
+<div class="char-cell" style="background:rgb(64,143,114);color:#f0f0f0" data-cp="U+23C5" data-name="DENTISTRY SYMBOL LIGHT UP AND HORIZONTAL WITH TRIANGLE"><div class="char-display">⏅</div><div class="char-code">U+23C5</div><div class="char-freq">676</div></div>
+<div class="char-cell" style="background:rgb(51,112,130);color:#f0f0f0" data-cp="U+23C6" data-name="DENTISTRY SYMBOL LIGHT VERTICAL AND WAVE"><div class="char-display">⏆</div><div class="char-code">U+23C6</div><div class="char-freq">184</div></div>
+<div class="char-cell" style="background:rgb(68,146,109);color:#f0f0f0" data-cp="U+23C7" data-name="DENTISTRY SYMBOL LIGHT DOWN AND HORIZONTAL WITH WAVE"><div class="char-display">⏇</div><div class="char-code">U+23C7</div><div class="char-freq">783</div></div>
+<div class="char-cell" style="background:rgb(57,131,123);color:#f0f0f0" data-cp="U+23C8" data-name="DENTISTRY SYMBOL LIGHT UP AND HORIZONTAL WITH WAVE"><div class="char-display">⏈</div><div class="char-code">U+23C8</div><div class="char-freq">412</div></div>
+<div class="char-cell" style="background:rgb(53,120,127);color:#f0f0f0" data-cp="U+23C9" data-name="DENTISTRY SYMBOL LIGHT DOWN AND HORIZONTAL"><div class="char-display">⏉</div><div class="char-code">U+23C9</div><div class="char-freq">254</div></div>
+<div class="char-cell" style="background:rgb(60,140,119);color:#f0f0f0" data-cp="U+23CA" data-name="DENTISTRY SYMBOL LIGHT UP AND HORIZONTAL"><div class="char-display">⏊</div><div class="char-code">U+23CA</div><div class="char-freq">590</div></div>
+<div class="char-cell" style="background:rgb(54,122,127);color:#f0f0f0" data-cp="U+23CB" data-name="DENTISTRY SYMBOL LIGHT VERTICAL AND TOP LEFT"><div class="char-display">⏋</div><div class="char-code">U+23CB</div><div class="char-freq">274</div></div>
+<div class="char-cell" style="background:rgb(72,149,104);color:#f0f0f0" data-cp="U+23CC" data-name="DENTISTRY SYMBOL LIGHT VERTICAL AND BOTTOM LEFT"><div class="char-display">⏌</div><div class="char-code">U+23CC</div><div class="char-freq">912</div></div>
+<div class="char-cell" style="background:rgb(82,156,91);color:#f0f0f0" data-cp="U+23CD" data-name="SQUARE FOOT"><div class="char-display">⏍</div><div class="char-code">U+23CD</div><div class="char-freq">1.3 K</div></div>
+<div class="char-cell" style="background:rgb(212,107,22);color:#f0f0f0" data-cp="U+23CE" data-name="RETURN SYMBOL"><div class="char-display">⏎</div><div class="char-code">U+23CE</div><div class="char-freq">111.7 K</div></div>
+<div class="char-cell" style="background:rgb(202,162,34);color:#111" data-cp="U+23CF" data-name="EJECT SYMBOL"><div class="char-display">⏏</div><div class="char-code">U+23CF</div><div class="char-freq">22.3 K</div></div>
+<div class="char-cell" style="background:rgb(216,127,26);color:#111" data-cp="U+23D0" data-name="VERTICAL LINE EXTENSION"><div class="char-display">⏐</div><div class="char-code">U+23D0</div><div class="char-freq">69.5 K</div></div>
+<div class="char-cell" style="background:rgb(213,111,23);color:#f0f0f0" data-cp="U+23D1" data-name="METRICAL BREVE"><div class="char-display">⏑</div><div class="char-code">U+23D1</div><div class="char-freq">101.5 K</div></div>
+<div class="char-cell" style="background:rgb(60,140,119);color:#f0f0f0" data-cp="U+23D2" data-name="METRICAL LONG OVER SHORT"><div class="char-display">⏒</div><div class="char-code">U+23D2</div><div class="char-freq">594</div></div>
+<div class="char-cell" style="background:rgb(167,178,44);color:#111" data-cp="U+23D3" data-name="METRICAL SHORT OVER LONG"><div class="char-display">⏓</div><div class="char-code">U+23D3</div><div class="char-freq">8.0 K</div></div>
+<div class="char-cell" style="background:rgb(70,147,106);color:#f0f0f0" data-cp="U+23D4" data-name="METRICAL LONG OVER TWO SHORTS"><div class="char-display">⏔</div><div class="char-code">U+23D4</div><div class="char-freq">844</div></div>
+<div class="char-cell" style="background:rgb(58,134,122);color:#f0f0f0" data-cp="U+23D5" data-name="METRICAL TWO SHORTS OVER LONG"><div class="char-display">⏕</div><div class="char-code">U+23D5</div><div class="char-freq">454</div></div>
+<div class="char-cell" style="background:rgb(58,134,122);color:#f0f0f0" data-cp="U+23D6" data-name="METRICAL TWO SHORTS JOINED"><div class="char-display">⏖</div><div class="char-code">U+23D6</div><div class="char-freq">457</div></div>
+<div class="char-cell" style="background:rgb(48,104,134);color:#f0f0f0" data-cp="U+23D7" data-name="METRICAL TRISEME"><div class="char-display">⏗</div><div class="char-code">U+23D7</div><div class="char-freq">127</div></div>
+<div class="char-cell" style="background:rgb(54,123,126);color:#f0f0f0" data-cp="U+23D8" data-name="METRICAL TETRASEME"><div class="char-display">⏘</div><div class="char-code">U+23D8</div><div class="char-freq">289</div></div>
+<div class="char-cell" style="background:rgb(55,126,125);color:#f0f0f0" data-cp="U+23D9" data-name="METRICAL PENTASEME"><div class="char-display">⏙</div><div class="char-code">U+23D9</div><div class="char-freq">329</div></div>
+<div class="char-cell" style="background:rgb(122,172,61);color:#111" data-cp="U+23DA" data-name="EARTH GROUND"><div class="char-display">⏚</div><div class="char-code">U+23DA</div><div class="char-freq">3.6 K</div></div>
+<div class="char-cell" style="background:rgb(75,151,101);color:#f0f0f0" data-cp="U+23DB" data-name="FUSE"><div class="char-display">⏛</div><div class="char-code">U+23DB</div><div class="char-freq">997</div></div>
+<div class="char-cell" style="background:rgb(60,140,119);color:#f0f0f0" data-cp="U+23DC" data-name="TOP PARENTHESIS"><div class="char-display">⏜</div><div class="char-code">U+23DC</div><div class="char-freq">596</div></div>
+<div class="char-cell" style="background:rgb(102,170,69);color:#f0f0f0" data-cp="U+23DD" data-name="BOTTOM PARENTHESIS"><div class="char-display">⏝</div><div class="char-code">U+23DD</div><div class="char-freq">2.5 K</div></div>
+<div class="char-cell" style="background:rgb(88,161,84);color:#f0f0f0" data-cp="U+23DE" data-name="TOP CURLY BRACKET"><div class="char-display">⏞</div><div class="char-code">U+23DE</div><div class="char-freq">1.6 K</div></div>
+<div class="char-cell" style="background:rgb(86,159,87);color:#f0f0f0" data-cp="U+23DF" data-name="BOTTOM CURLY BRACKET"><div class="char-display">⏟</div><div class="char-code">U+23DF</div><div class="char-freq">1.5 K</div></div>
+<div class="char-cell" style="background:rgb(99,169,70);color:#f0f0f0" data-cp="U+23E0" data-name="TOP TORTOISE SHELL BRACKET"><div class="char-display">⏠</div><div class="char-code">U+23E0</div><div class="char-freq">2.4 K</div></div>
+<div class="char-cell" style="background:rgb(53,118,128);color:#f0f0f0" data-cp="U+23E1" data-name="BOTTOM TORTOISE SHELL BRACKET"><div class="char-display">⏡</div><div class="char-code">U+23E1</div><div class="char-freq">237</div></div>
+<div class="char-cell" style="background:rgb(52,115,129);color:#f0f0f0" data-cp="U+23E2" data-name="WHITE TRAPEZIUM"><div class="char-display">⏢</div><div class="char-code">U+23E2</div><div class="char-freq">202</div></div>
+<div class="char-cell" style="background:rgb(125,173,60);color:#111" data-cp="U+23E3" data-name="BENZENE RING WITH CIRCLE"><div class="char-display">⏣</div><div class="char-code">U+23E3</div><div class="char-freq">3.8 K</div></div>
+<div class="char-cell" style="background:rgb(200,70,20);color:#f0f0f0" data-cp="U+23E4" data-name="STRAIGHTNESS"><div class="char-display">⏤</div><div class="char-code">U+23E4</div><div class="char-freq">265.2 K</div></div>
+<div class="char-cell" style="background:rgb(80,155,94);color:#f0f0f0" data-cp="U+23E5" data-name="FLATNESS"><div class="char-display">⏥</div><div class="char-code">U+23E5</div><div class="char-freq">1.2 K</div></div>
+<div class="char-cell" style="background:rgb(59,138,120);color:#f0f0f0" data-cp="U+23E6" data-name="AC CURRENT"><div class="char-display">⏦</div><div class="char-code">U+23E6</div><div class="char-freq">547</div></div>
+<div class="char-cell" style="background:rgb(55,125,125);color:#f0f0f0" data-cp="U+23E7" data-name="ELECTRICAL INTERSECTION"><div class="char-display">⏧</div><div class="char-code">U+23E7</div><div class="char-freq">312</div></div>
+<div class="char-cell" style="background:rgb(72,149,103);color:#f0f0f0" data-cp="U+23E8" data-name="DECIMAL EXPONENT SYMBOL"><div class="char-display">⏨</div><div class="char-code">U+23E8</div><div class="char-freq">919</div></div>
+<div class="char-cell" style="background:rgb(185,40,20);color:#f0f0f0" data-cp="U+23E9" data-name="BLACK RIGHT-POINTING DOUBLE TRIANGLE"><div class="char-display">⏩</div><div class="char-code">U+23E9</div><div class="char-freq">535.4 K</div></div>
+<div class="char-cell" style="background:rgb(215,122,25);color:#f0f0f0" data-cp="U+23EA" data-name="BLACK LEFT-POINTING DOUBLE TRIANGLE"><div class="char-display">⏪</div><div class="char-code">U+23EA</div><div class="char-freq">79.0 K</div></div>
+<div class="char-cell" style="background:rgb(212,155,31);color:#111" data-cp="U+23EB" data-name="BLACK UP-POINTING DOUBLE TRIANGLE"><div class="char-display">⏫</div><div class="char-code">U+23EB</div><div class="char-freq">31.5 K</div></div>
+<div class="char-cell" style="background:rgb(215,123,25);color:#f0f0f0" data-cp="U+23EC" data-name="BLACK DOWN-POINTING DOUBLE TRIANGLE"><div class="char-display">⏬</div><div class="char-code">U+23EC</div><div class="char-freq">76.2 K</div></div>
+<div class="char-cell" style="background:rgb(219,146,29);color:#111" data-cp="U+23ED" data-name="BLACK RIGHT-POINTING DOUBLE TRIANGLE WITH VERTICAL BAR"><div class="char-display">⏭</div><div class="char-code">U+23ED</div><div class="char-freq">44.7 K</div></div>
+<div class="char-cell" style="background:rgb(169,178,43);color:#111" data-cp="U+23EE" data-name="BLACK LEFT-POINTING DOUBLE TRIANGLE WITH VERTICAL BAR"><div class="char-display">⏮</div><div class="char-code">U+23EE</div><div class="char-freq">8.3 K</div></div>
+<div class="char-cell" style="background:rgb(218,142,28);color:#111" data-cp="U+23EF" data-name="BLACK RIGHT-POINTING TRIANGLE WITH DOUBLE VERTICAL BAR"><div class="char-display">⏯</div><div class="char-code">U+23EF</div><div class="char-freq">49.2 K</div></div>
+<div class="char-cell" style="background:rgb(148,17,13);color:#f0f0f0" data-cp="U+23F0" data-name="ALARM CLOCK"><div class="char-display">⏰</div><div class="char-code">U+23F0</div><div class="char-freq">1.1 M</div></div>
+<div class="char-cell" style="background:rgb(194,58,20);color:#f0f0f0" data-cp="U+23F1" data-name="STOPWATCH"><div class="char-display">⏱</div><div class="char-code">U+23F1</div><div class="char-freq">357.5 K</div></div>
+<div class="char-cell" style="background:rgb(213,110,23);color:#f0f0f0" data-cp="U+23F2" data-name="TIMER CLOCK"><div class="char-display">⏲</div><div class="char-code">U+23F2</div><div class="char-freq">104.2 K</div></div>
+<div class="char-cell" style="background:rgb(188,46,20);color:#f0f0f0" data-cp="U+23F3" data-name="HOURGLASS WITH FLOWING SAND"><div class="char-display">⏳</div><div class="char-code">U+23F3</div><div class="char-freq">469.4 K</div></div>
+<div class="char-cell" style="background:rgb(183,177,39);color:#111" data-cp="U+23F4" data-name="BLACK MEDIUM LEFT-POINTING TRIANGLE"><div class="char-display">⏴</div><div class="char-code">U+23F4</div><div class="char-freq">11.2 K</div></div>
+<div class="char-cell" style="background:rgb(217,151,30);color:#111" data-cp="U+23F5" data-name="BLACK MEDIUM RIGHT-POINTING TRIANGLE"><div class="char-display">⏵</div><div class="char-code">U+23F5</div><div class="char-freq">37.5 K</div></div>
+<div class="char-cell" style="background:rgb(92,164,79);color:#f0f0f0" data-cp="U+23F6" data-name="BLACK MEDIUM UP-POINTING TRIANGLE"><div class="char-display">⏶</div><div class="char-code">U+23F6</div><div class="char-freq">1.9 K</div></div>
+<div class="char-cell" style="background:rgb(115,171,64);color:#111" data-cp="U+23F7" data-name="BLACK MEDIUM DOWN-POINTING TRIANGLE"><div class="char-display">⏷</div><div class="char-code">U+23F7</div><div class="char-freq">3.1 K</div></div>
+<div class="char-cell" style="background:rgb(196,167,35);color:#111" data-cp="U+23F8" data-name="DOUBLE VERTICAL BAR"><div class="char-display">⏸</div><div class="char-code">U+23F8</div><div class="char-freq">17.7 K</div></div>
+<div class="char-cell" style="background:rgb(170,26,18);color:#f0f0f0" data-cp="U+23F9" data-name="BLACK SQUARE FOR STOP"><div class="char-display">⏹</div><div class="char-code">U+23F9</div><div class="char-freq">789.6 K</div></div>
+<div class="char-cell" style="background:rgb(217,136,27);color:#111" data-cp="U+23FA" data-name="BLACK CIRCLE FOR RECORD"><div class="char-display">⏺</div><div class="char-code">U+23FA</div><div class="char-freq">55.6 K</div></div>
+<div class="char-cell" style="background:rgb(121,172,61);color:#111" data-cp="U+23FB" data-name="POWER SYMBOL"><div class="char-display">⏻</div><div class="char-code">U+23FB</div><div class="char-freq">3.5 K</div></div>
+<div class="char-cell" style="background:rgb(77,153,97);color:#f0f0f0" data-cp="U+23FC" data-name="POWER ON-OFF SYMBOL"><div class="char-display">⏼</div><div class="char-code">U+23FC</div><div class="char-freq">1.1 K</div></div>
+<div class="char-cell" style="background:rgb(66,145,111);color:#f0f0f0" data-cp="U+23FD" data-name="POWER ON SYMBOL"><div class="char-display">⏽</div><div class="char-code">U+23FD</div><div class="char-freq">741</div></div>
+<div class="char-cell" style="background:rgb(64,143,114);color:#f0f0f0" data-cp="U+23FE" data-name="POWER SLEEP SYMBOL"><div class="char-display">⏾</div><div class="char-code">U+23FE</div><div class="char-freq">688</div></div>
+<div class="char-cell" style="background:rgb(47,101,135);color:#f0f0f0" data-cp="U+23FF" data-name="OBSERVER EYE SYMBOL"><div class="char-display">⏿</div><div class="char-code">U+23FF</div><div class="char-freq">113</div></div>
+</div>
+
+<div class="source">
+  Frequency data: <a href="https://github.com/Bin-2/FineFreq">FineFreq</a>
+  (FineWeb v1.4.0 &mdash; 81 T English web characters, 2013&ndash;2025) &middot;
+  Block: <a href="https://www.unicode.org/charts/PDF/U2300.pdf">Miscellaneous Technical</a> (Unicode 16.0) &middot;
+  Paper: <a href="https://arxiv.org/html/2512.09701">arXiv:2512.09701</a>
+</div>
+
+<script>
+// Add checkboxes and tooltips to every cell
+document.querySelectorAll('.char-cell').forEach(cell => {
+  // Checkbox
+  const cb = document.createElement('input');
+  cb.type = 'checkbox';
+  cb.className = 'char-check';
+  cb.title = 'Select this character';
+  cell.insertBefore(cb, cell.firstChild);
+
+  // Tooltip with Unicode name
+  const name = cell.dataset.name || '(unassigned)';
+  const tip = document.createElement('div');
+  tip.className = 'tooltip';
+  tip.textContent = cell.dataset.cp + '  ' + name;
+  cell.appendChild(tip);
+});
+
+// Export button
+document.getElementById('export-btn').addEventListener('click', () => {
+  const checked = [...document.querySelectorAll('.char-cell')].filter(
+    cell => cell.querySelector('.char-check').checked
+  );
+  if (checked.length === 0) {
+    alert('No characters selected. Check some tiles first.');
+    return;
+  }
+  const lines = checked.map(cell => {
+    const cp = cell.dataset.cp;
+    const name = cell.dataset.name || '(unassigned)';
+    const charDisp = cell.querySelector('.char-display').textContent;
+    return charDisp + '  ' + cp + '  ' + name;
+  });
+  const text = checked.length + ' character(s) selected:\n\n' + lines.join('\n');
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Copied ' + checked.length + ' selected character(s) to clipboard.');
+  });
+});
+</script>
+</body>
+</html>
