@@ -13,36 +13,136 @@ extern "C" {
 
 /* --- Characters Type APIs ----------------------------------------------- */
 
-#define EMOJI_MISC_SYMBOLS_START     0x2600
-#define EMOJI_DINGBATS_END           0x27BF
-#define EMOJI_REGIONAL_IND_START     0x1F1E6
-#define EMOJI_REGIONAL_IND_END       0x1F1FF
-#define EMOJI_MISC_PICTOGRAPHS_START 0x1F300
-#define EMOJI_MISC_PICTOGRAPHS_END   0x1F5FF
-#define EMOJI_EMOTICONS_START        0x1F600
-#define EMOJI_EMOTICONS_END          0x1F64F
-#define EMOJI_TRANSPORT_START        0x1F680
-#define EMOJI_TRANSPORT_END          0x1F6FF
-#define EMOJI_GEOMETRIC_EXT_START    0x1F780
-#define EMOJI_GEOMETRIC_EXT_END      0x1F7FF
-#define EMOJI_SUPPLEMENTAL_START     0x1F900
-#define EMOJI_SUPPLEMENTAL_END       0x1F9FF
-#define EMOJI_EXTENDED_A_START       0x1FA00
-#define EMOJI_EXTENDED_A_END         0x1FAFF
+/* Cherry-picked Miscellaneous Technical characters (U+2300..U+23FF). */
+#define EMOJI_MISC_TECH_WATCH          0x231A
+#define EMOJI_MISC_TECH_HOURGLASS      0x231B
+#define EMOJI_MISC_TECH_FF             0x23E9
+#define EMOJI_MISC_TECH_REW            0x23EA
+#define EMOJI_MISC_TECH_UP             0x23EB
+#define EMOJI_MISC_TECH_DOWN           0x23EC
+#define EMOJI_MISC_TECH_ALARM          0x23F0
+#define EMOJI_MISC_TECH_HOURGLASS2     0x23F3
 
-/* Returns 1 if ch is an emoji codepoint (broad block-based ranges). */
+/* Fully assigned BMP blocks. */
+#define EMOJI_GEOMETRIC_SHAPES_START   0x25A0
+#define EMOJI_GEOMETRIC_SHAPES_END     0x25FF
+#define EMOJI_MISC_SYMBOLS_START       0x2600
+#define EMOJI_DINGBATS_END             0x27BF
+
+/* Misc Symbols and Arrows (U+2B00..U+2BFF): 3 assigned sub-ranges.
+   Gaps: U+2B74..U+2B75, U+2B96. */
+#define EMOJI_MSA_SUB1_START           0x2B00
+#define EMOJI_MSA_SUB1_END             0x2B73
+#define EMOJI_MSA_SUB2_START           0x2B76
+#define EMOJI_MSA_SUB2_END             0x2B95
+#define EMOJI_MSA_SUB3_START           0x2B97
+#define EMOJI_MSA_SUB3_END             0x2BFF
+
+/* Fully assigned SMP blocks. */
+#define EMOJI_REGIONAL_IND_START       0x1F1E6
+#define EMOJI_REGIONAL_IND_END         0x1F1FF
+#define EMOJI_MISC_PICTOGRAPHS_START   0x1F300
+#define EMOJI_MISC_PICTOGRAPHS_END     0x1F5FF
+#define EMOJI_EMOTICONS_START          0x1F600
+#define EMOJI_EMOTICONS_END            0x1F64F
+#define EMOJI_SUPPLEMENTAL_START       0x1F900
+#define EMOJI_SUPPLEMENTAL_END         0x1F9FF
+
+/* Transport and Map Symbols (U+1F680..U+1F6FF): 3 assigned sub-ranges.
+   Gaps: U+1F6D8..U+1F6DB, U+1F6ED..U+1F6EF. */
+#define EMOJI_TRANSPORT_SUB1_START     0x1F680
+#define EMOJI_TRANSPORT_SUB1_END       0x1F6D7
+#define EMOJI_TRANSPORT_SUB2_START     0x1F6DC
+#define EMOJI_TRANSPORT_SUB2_END       0x1F6EC
+#define EMOJI_TRANSPORT_SUB3_START     0x1F6F0
+#define EMOJI_TRANSPORT_SUB3_END       0x1F6FC
+
+/* Geometric Shapes Extended (U+1F780..U+1F7FF): 3 assigned sub-ranges.
+   Gaps: U+1F7DA..U+1F7DF, U+1F7EC..U+1F7EF. */
+#define EMOJI_GEO_EXT_SUB1_START      0x1F780
+#define EMOJI_GEO_EXT_SUB1_END        0x1F7D9
+#define EMOJI_GEO_EXT_SUB2_START      0x1F7E0
+#define EMOJI_GEO_EXT_SUB2_END        0x1F7EB
+#define EMOJI_GEO_EXT_SUB3_START      0x1F7F0
+#define EMOJI_GEO_EXT_SUB3_END        0x1F7F0
+
+/* Symbols and Pictographs Extended-A (U+1FA00..U+1FAFF): 8 assigned sub-ranges.
+   Gaps: U+1FA54..U+1FA5F, U+1FA6E..U+1FA6F, U+1FA7D..U+1FA7F,
+         U+1FA8A..U+1FA8E, U+1FAC7..U+1FACD, U+1FADD..U+1FADE,
+         U+1FAEA..U+1FAEF. */
+#define EMOJI_EXT_A_SUB1_START        0x1FA00
+#define EMOJI_EXT_A_SUB1_END          0x1FA53
+#define EMOJI_EXT_A_SUB2_START        0x1FA60
+#define EMOJI_EXT_A_SUB2_END          0x1FA6D
+#define EMOJI_EXT_A_SUB3_START        0x1FA70
+#define EMOJI_EXT_A_SUB3_END          0x1FA7C
+#define EMOJI_EXT_A_SUB4_START        0x1FA80
+#define EMOJI_EXT_A_SUB4_END          0x1FA89
+#define EMOJI_EXT_A_SUB5_START        0x1FA8F
+#define EMOJI_EXT_A_SUB5_END          0x1FAC6
+#define EMOJI_EXT_A_SUB6_START        0x1FACE
+#define EMOJI_EXT_A_SUB6_END          0x1FADC
+#define EMOJI_EXT_A_SUB7_START        0x1FADF
+#define EMOJI_EXT_A_SUB7_END          0x1FAE9
+#define EMOJI_EXT_A_SUB8_START        0x1FAF0
+#define EMOJI_EXT_A_SUB8_END          0x1FAF8
+
+/* Returns 1 if ch is a cherry-picked Miscellaneous Technical emoji. */
+static inline int _PyUnicode_IsMiscTechnicalEmoji(Py_UCS4 ch)
+{
+    switch (ch) {
+    case EMOJI_MISC_TECH_WATCH:
+    case EMOJI_MISC_TECH_HOURGLASS:
+    case EMOJI_MISC_TECH_FF:
+    case EMOJI_MISC_TECH_REW:
+    case EMOJI_MISC_TECH_UP:
+    case EMOJI_MISC_TECH_DOWN:
+    case EMOJI_MISC_TECH_ALARM:
+    case EMOJI_MISC_TECH_HOURGLASS2:
+        return 1;
+    default:
+        return 0;
+    }
+}
+
+/* Returns 1 if ch is an assigned emoji codepoint.
+   Uses precise sub-ranges to exclude unassigned codepoints (Cn)
+   within blocks that have gaps. */
 static inline int _PyUnicode_IsEmoji(Py_UCS4 ch)
 {
-    if (ch < EMOJI_MISC_SYMBOLS_START || ch > EMOJI_EXTENDED_A_END) return 0;
-    if (ch <= EMOJI_DINGBATS_END) return 1;
+    /* Cherry-picked Misc Technical characters */
+    if (_PyUnicode_IsMiscTechnicalEmoji(ch)) return 1;
+    /* Fully assigned BMP blocks */
+    if (ch >= EMOJI_GEOMETRIC_SHAPES_START && ch <= EMOJI_GEOMETRIC_SHAPES_END) return 1;
+    if (ch >= EMOJI_MISC_SYMBOLS_START && ch <= EMOJI_DINGBATS_END) return 1;
+    /* Misc Symbols and Arrows — 3 sub-ranges */
+    if (ch >= EMOJI_MSA_SUB1_START && ch <= EMOJI_MSA_SUB1_END) return 1;
+    if (ch >= EMOJI_MSA_SUB2_START && ch <= EMOJI_MSA_SUB2_END) return 1;
+    if (ch >= EMOJI_MSA_SUB3_START && ch <= EMOJI_MSA_SUB3_END) return 1;
+    /* SMP — early exit for non-SMP */
     if (ch < EMOJI_REGIONAL_IND_START) return 0;
+    /* Fully assigned SMP blocks */
     if (ch <= EMOJI_REGIONAL_IND_END) return 1;
     if (ch >= EMOJI_MISC_PICTOGRAPHS_START && ch <= EMOJI_MISC_PICTOGRAPHS_END) return 1;
     if (ch >= EMOJI_EMOTICONS_START && ch <= EMOJI_EMOTICONS_END) return 1;
-    if (ch >= EMOJI_TRANSPORT_START && ch <= EMOJI_TRANSPORT_END) return 1;
-    if (ch >= EMOJI_GEOMETRIC_EXT_START && ch <= EMOJI_GEOMETRIC_EXT_END) return 1;
     if (ch >= EMOJI_SUPPLEMENTAL_START && ch <= EMOJI_SUPPLEMENTAL_END) return 1;
-    if (ch >= EMOJI_EXTENDED_A_START && ch <= EMOJI_EXTENDED_A_END) return 1;
+    /* Transport and Map Symbols — 3 sub-ranges */
+    if (ch >= EMOJI_TRANSPORT_SUB1_START && ch <= EMOJI_TRANSPORT_SUB1_END) return 1;
+    if (ch >= EMOJI_TRANSPORT_SUB2_START && ch <= EMOJI_TRANSPORT_SUB2_END) return 1;
+    if (ch >= EMOJI_TRANSPORT_SUB3_START && ch <= EMOJI_TRANSPORT_SUB3_END) return 1;
+    /* Geometric Shapes Extended — 3 sub-ranges */
+    if (ch >= EMOJI_GEO_EXT_SUB1_START && ch <= EMOJI_GEO_EXT_SUB1_END) return 1;
+    if (ch >= EMOJI_GEO_EXT_SUB2_START && ch <= EMOJI_GEO_EXT_SUB2_END) return 1;
+    if (ch == EMOJI_GEO_EXT_SUB3_START) return 1;  /* single char U+1F7F0 */
+    /* Extended-A — 8 sub-ranges */
+    if (ch >= EMOJI_EXT_A_SUB1_START && ch <= EMOJI_EXT_A_SUB1_END) return 1;
+    if (ch >= EMOJI_EXT_A_SUB2_START && ch <= EMOJI_EXT_A_SUB2_END) return 1;
+    if (ch >= EMOJI_EXT_A_SUB3_START && ch <= EMOJI_EXT_A_SUB3_END) return 1;
+    if (ch >= EMOJI_EXT_A_SUB4_START && ch <= EMOJI_EXT_A_SUB4_END) return 1;
+    if (ch >= EMOJI_EXT_A_SUB5_START && ch <= EMOJI_EXT_A_SUB5_END) return 1;
+    if (ch >= EMOJI_EXT_A_SUB6_START && ch <= EMOJI_EXT_A_SUB6_END) return 1;
+    if (ch >= EMOJI_EXT_A_SUB7_START && ch <= EMOJI_EXT_A_SUB7_END) return 1;
+    if (ch >= EMOJI_EXT_A_SUB8_START && ch <= EMOJI_EXT_A_SUB8_END) return 1;
     return 0;
 }
 

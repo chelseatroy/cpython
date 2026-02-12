@@ -396,13 +396,14 @@ class BoundaryTests(unittest.TestCase):
         """
         self.assertTrue("\U0001F780".isidentifier())
 
-    def test_boundary__geometric_shapes_last__valid(self):
-        """Last Geometric Shape Extended (U+1F7FF) should be valid.
+    def test_boundary__geometric_shapes_last_assigned__valid(self):
+        """Last assigned Geometric Shape Extended (U+1F7F0) should be valid.
 
-        U+1F7FF is the last character in the Geometric Shapes Extended
-        block.
+        U+1F7F0 (HEAVY EQUALS SIGN) is the last assigned character in the
+        Geometric Shapes Extended block. U+1F7FF (end of block) is
+        unassigned and should be rejected per the v0.2 rule.
         """
-        self.assertTrue("\U0001F7FF".isidentifier())
+        self.assertTrue("\U0001F7F0".isidentifier())
 
     def test_boundary__before_geometric_shapes__invalid(self):
         """Character before Geometric Shapes Extended (U+1F77F) should be invalid.
@@ -548,12 +549,12 @@ result = \U0001F1F0
         self.assertEqual(exec_globals["result"], "K indicator")
 
     def test_functional__geometric_shape_boundary_chars_in_code(self):
-        """First and last geometric shapes should work in actual code."""
+        """First and last assigned geometric shapes should work in actual code."""
         exec_globals = {}
         code = """
 \U0001F780 = "first"
-\U0001F7FF = "last"
-result = \U0001F780 + " " + \U0001F7FF
+\U0001F7F0 = "last"
+result = \U0001F780 + " " + \U0001F7F0
 """
         exec(code, exec_globals)
         self.assertEqual(exec_globals["result"], "first last")
@@ -663,9 +664,9 @@ class V02NewRangeTests(unittest.TestCase):
         """U+1FA00 (first in Chess Symbols block) should be valid."""
         self.assertTrue("\U0001FA00".isidentifier())
 
-    def test_v02__chess_symbols__last_char__valid(self):
-        """U+1FA6F (last in Chess Symbols block) should be valid."""
-        self.assertTrue("\U0001FA6F".isidentifier())
+    def test_v02__chess_symbols__last_assigned__valid(self):
+        """U+1FA6D (last assigned in Chess Symbols block) should be valid."""
+        self.assertTrue("\U0001FA6D".isidentifier())
 
     def test_v02__chess_symbols__before_block__invalid(self):
         """U+1F9FF (just before Chess Symbols) is Supplemental Symbols.
@@ -678,8 +679,8 @@ class V02NewRangeTests(unittest.TestCase):
     def test_v02__chess_symbols__after_block_into_extended_a__valid(self):
         """U+1FA70 (first in Extended-A) should be valid.
 
-        Verifies no gap between Chess Symbols (ends U+1FA6F) and
-        Extended-A (starts U+1FA70).
+        Verifies no gap between Chess Symbols (block ends U+1FA6F) and
+        Extended-A (starts U+1FA70). Last assigned in Chess is U+1FA6D.
         """
         self.assertTrue("\U0001FA70".isidentifier())
 
