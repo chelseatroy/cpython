@@ -114,6 +114,7 @@ static inline int _PyUnicode_IsMiscTechnicalEmoji(Py_UCS4 ch)
    within blocks that have gaps. */
 static inline int _PyUnicode_IsEmoji(Py_UCS4 ch)
 {
+    if (ch < EMOJI_MISC_TECH_WATCH) return 0;
     /* Cherry-picked Misc Technical characters */
     if (_PyUnicode_IsMiscTechnicalEmoji(ch)) return 1;
     /* Fully assigned BMP blocks */
