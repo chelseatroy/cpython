@@ -12427,14 +12427,14 @@ _PyUnicode_ScanIdentifier(PyObject *self)
            must be emoji to continue an emoji ZWJ sequence.
            ZWJ after non-emoji falls through to XID_Continue,
            where it is allowed for Indic scripts. */
-        if (ch == 0x200D) {  /* ZWJ */
+        if (ch == EMOJI_ZERO_WIDTH_JOINER) {
             if (prev_was_emoji) {
                 prev_was_emoji = 0;
                 continue;
             }
         }
         /* VS16: only allow after emoji codepoints */
-        if (ch == 0xFE0F) {  /* VS16 */
+        if (ch == EMOJI_VARIATION_SELECTOR_16) {
             if (prev_was_emoji) {
                 continue;
             }

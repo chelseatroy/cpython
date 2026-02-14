@@ -13,6 +13,10 @@ extern "C" {
 
 /* --- Characters Type APIs ----------------------------------------------- */
 
+/* Sequence-joining and variation characters used in emoji identifiers. */
+#define EMOJI_ZERO_WIDTH_JOINER        0x200D
+#define EMOJI_VARIATION_SELECTOR_16    0xFE0F
+
 /* Cherry-picked Miscellaneous Technical characters (U+2300..U+23FF). */
 #define EMOJI_MISC_TECH_WATCH          0x231A
 #define EMOJI_MISC_TECH_HOURGLASS      0x231B
