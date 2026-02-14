@@ -12415,8 +12415,8 @@ _PyUnicode_ScanIdentifier(PyObject *self)
        definition of XID_Start and XID_Continue, it is sufficient
        to check just for these, except that _ must be allowed
        as starting an identifier.  */
-    int prev_was_emoji = _PyUnicode_IsEmoji(ch);
-    if (!prev_was_emoji && !_PyUnicode_IsXidStart(ch) && ch != 0x5F /* LOW LINE */) {
+    int last_was_emoji = _PyUnicode_IsEmoji(ch);
+    if (!last_was_emoji && !_PyUnicode_IsXidStart(ch) && ch != 0x5F /* LOW LINE */) {
         return 0;
     }
 
@@ -12428,21 +12428,21 @@ _PyUnicode_ScanIdentifier(PyObject *self)
            ZWJ after non-emoji falls through to XID_Continue,
            where it is allowed for Indic scripts. */
         if (ch == EMOJI_ZERO_WIDTH_JOINER) {
-            if (prev_was_emoji) {
-                prev_was_emoji = 0;
+            if (last_was_emoji) {
+                last_was_emoji = 0;
                 continue;
             }
         }
         /* VS16: only allow after emoji codepoints */
         if (ch == EMOJI_VARIATION_SELECTOR_16) {
-            if (prev_was_emoji) {
+            if (last_was_emoji) {
                 continue;
             }
             return i;
         }
         int is_emoji = _PyUnicode_IsEmoji(ch);
         if (is_emoji || _PyUnicode_IsXidContinue(ch)) {
-            prev_was_emoji = is_emoji;
+            last_was_emoji = is_emoji;
             continue;
         }
         return i;
