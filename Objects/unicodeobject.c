@@ -12423,17 +12423,15 @@ _PyUnicode_ScanIdentifier(PyObject *self)
     for (i = 1; i < len; i++) {
         ch = PyUnicode_READ(kind, data, i);
 
-        /* Constrained ZWJ: only allow ZWJ between emoji.
-           Check this BEFORE general XID_Continue since ZWJ is
-           natively in XID_Continue (used for Indic scripts).
-           We intercept it here to enforce emoji-only context. */
+        /* ZWJ after emoji: reset emoji state so the next character
+           must be emoji to continue an emoji ZWJ sequence.
+           ZWJ after non-emoji falls through to XID_Continue,
+           where it is allowed for Indic scripts. */
         if (ch == 0x200D) {  /* ZWJ */
             if (prev_was_emoji) {
                 prev_was_emoji = 0;
                 continue;
             }
-            /* ZWJ after non-emoji: still allow since it is
-               natively in XID_Continue for Indic scripts */
         }
         /* VS16: only allow after emoji codepoints */
         if (ch == 0xFE0F) {  /* VS16 */
