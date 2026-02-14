@@ -12441,7 +12441,7 @@ _PyUnicode_ScanIdentifier(PyObject *self)
             return i;
         }
         int is_emoji = (ch >= 0x80) ? _PyUnicode_IsEmoji(ch) : 0;
-        if (is_emoji || _PyUnicode_IsXidContinue(ch)) {
+        if (is_emoji || _PyUnicode_IsXidContinueNoEmoji(ch)) {
             last_was_emoji = is_emoji;
             continue;
         }

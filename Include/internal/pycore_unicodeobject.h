@@ -155,6 +155,9 @@ static inline int _PyUnicode_IsEmoji(Py_UCS4 ch)
    accepted by _PyUnicode_IsEmoji. */
 extern int _PyUnicode_IsXidStart(Py_UCS4 ch);
 extern int _PyUnicode_IsXidContinue(Py_UCS4 ch);
+/* Standard XID_Continue only (no emoji). Use when emoji status is
+   already known to avoid redundant _PyUnicode_IsEmoji evaluation. */
+extern int _PyUnicode_IsXidContinueNoEmoji(Py_UCS4 ch);
 extern int _PyUnicode_ToLowerFull(Py_UCS4 ch, Py_UCS4 *res);
 extern int _PyUnicode_ToTitleFull(Py_UCS4 ch, Py_UCS4 *res);
 extern int _PyUnicode_ToUpperFull(Py_UCS4 ch, Py_UCS4 *res);

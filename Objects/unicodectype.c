@@ -99,6 +99,17 @@ int _PyUnicode_IsXidContinue(Py_UCS4 ch)
     return (ctype->flags & XID_CONTINUE_MASK) != 0 || _PyUnicode_IsEmoji(ch);
 }
 
+/* Returns 1 for standard XID_Continue characters only (no emoji).
+   Use when the caller has already checked _PyUnicode_IsEmoji separately. */
+int _PyUnicode_IsXidContinueNoEmoji(Py_UCS4 ch)
+{
+    if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') ||
+        (ch >= '0' && ch <= '9') || ch == '_')
+        return 1;
+    const _PyUnicode_TypeRecord *ctype = gettyperecord(ch);
+    return (ctype->flags & XID_CONTINUE_MASK) != 0;
+}
+
 /* Returns the integer decimal (0-9) for Unicode characters having
    this property, -1 otherwise. */
 
