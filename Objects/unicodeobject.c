@@ -12438,7 +12438,6 @@ _PyUnicode_ScanIdentifier(PyObject *self)
         /* VS16: only allow after emoji codepoints */
         if (ch == 0xFE0F) {  /* VS16 */
             if (prev_was_emoji) {
-                /* VS16 does not change emoji state */
                 continue;
             }
             return i;
