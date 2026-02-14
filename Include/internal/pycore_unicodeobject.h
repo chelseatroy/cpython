@@ -35,12 +35,12 @@ extern "C" {
 
 /* Misc Symbols and Arrows (U+2B00..U+2BFF): 3 assigned sub-ranges.
    Gaps: U+2B74..U+2B75, U+2B96. */
-#define EMOJI_MSA_SUB1_START           0x2B00
-#define EMOJI_MSA_SUB1_END             0x2B73
-#define EMOJI_MSA_SUB2_START           0x2B76
-#define EMOJI_MSA_SUB2_END             0x2B95
-#define EMOJI_MSA_SUB3_START           0x2B97
-#define EMOJI_MSA_SUB3_END             0x2BFF
+#define EMOJI_MISC_SYMB_ARROWS_SUB1_START           0x2B00
+#define EMOJI_MISC_SYMB_ARROWS_SUB1_END             0x2B73
+#define EMOJI_MISC_SYMB_ARROWS_SUB2_START           0x2B76
+#define EMOJI_MISC_SYMB_ARROWS_SUB2_END             0x2B95
+#define EMOJI_MISC_SYMB_ARROWS_SUB3_START           0x2B97
+#define EMOJI_MISC_SYMB_ARROWS_SUB3_END             0x2BFF
 
 /* Fully assigned SMP blocks. */
 #define EMOJI_REGIONAL_IND_START       0x1F1E6
@@ -63,33 +63,33 @@ extern "C" {
 
 /* Geometric Shapes Extended (U+1F780..U+1F7FF): 3 assigned sub-ranges.
    Gaps: U+1F7DA..U+1F7DF, U+1F7EC..U+1F7EF. */
-#define EMOJI_GEO_EXT_SUB1_START      0x1F780
-#define EMOJI_GEO_EXT_SUB1_END        0x1F7D9
-#define EMOJI_GEO_EXT_SUB2_START      0x1F7E0
-#define EMOJI_GEO_EXT_SUB2_END        0x1F7EB
-#define EMOJI_GEO_EXT_SUB3_START      0x1F7F0
-#define EMOJI_GEO_EXT_SUB3_END        0x1F7F0
+#define EMOJI_GEOMETRIC_EXT_SUB1_START      0x1F780
+#define EMOJI_GEOMETRIC_EXT_SUB1_END        0x1F7D9
+#define EMOJI_GEOMETRIC_EXT_SUB2_START      0x1F7E0
+#define EMOJI_GEOMETRIC_EXT_SUB2_END        0x1F7EB
+#define EMOJI_GEOMETRIC_EXT_SUB3_START      0x1F7F0
+#define EMOJI_GEOMETRIC_EXT_SUB3_END        0x1F7F0
 
 /* Symbols and Pictographs Extended-A (U+1FA00..U+1FAFF): 8 assigned sub-ranges.
    Gaps: U+1FA54..U+1FA5F, U+1FA6E..U+1FA6F, U+1FA7D..U+1FA7F,
          U+1FA8A..U+1FA8E, U+1FAC7..U+1FACD, U+1FADD..U+1FADE,
          U+1FAEA..U+1FAEF. */
-#define EMOJI_EXT_A_SUB1_START        0x1FA00
-#define EMOJI_EXT_A_SUB1_END          0x1FA53
-#define EMOJI_EXT_A_SUB2_START        0x1FA60
-#define EMOJI_EXT_A_SUB2_END          0x1FA6D
-#define EMOJI_EXT_A_SUB3_START        0x1FA70
-#define EMOJI_EXT_A_SUB3_END          0x1FA7C
-#define EMOJI_EXT_A_SUB4_START        0x1FA80
-#define EMOJI_EXT_A_SUB4_END          0x1FA89
-#define EMOJI_EXT_A_SUB5_START        0x1FA8F
-#define EMOJI_EXT_A_SUB5_END          0x1FAC6
-#define EMOJI_EXT_A_SUB6_START        0x1FACE
-#define EMOJI_EXT_A_SUB6_END          0x1FADC
-#define EMOJI_EXT_A_SUB7_START        0x1FADF
-#define EMOJI_EXT_A_SUB7_END          0x1FAE9
-#define EMOJI_EXT_A_SUB8_START        0x1FAF0
-#define EMOJI_EXT_A_SUB8_END          0x1FAF8
+#define EMOJI_EXTENDED_A_SUB1_START        0x1FA00
+#define EMOJI_EXTENDED_A_SUB1_END          0x1FA53
+#define EMOJI_EXTENDED_A_SUB2_START        0x1FA60
+#define EMOJI_EXTENDED_A_SUB2_END          0x1FA6D
+#define EMOJI_EXTENDED_A_SUB3_START        0x1FA70
+#define EMOJI_EXTENDED_A_SUB3_END          0x1FA7C
+#define EMOJI_EXTENDED_A_SUB4_START        0x1FA80
+#define EMOJI_EXTENDED_A_SUB4_END          0x1FA89
+#define EMOJI_EXTENDED_A_SUB5_START        0x1FA8F
+#define EMOJI_EXTENDED_A_SUB5_END          0x1FAC6
+#define EMOJI_EXTENDED_A_SUB6_START        0x1FACE
+#define EMOJI_EXTENDED_A_SUB6_END          0x1FADC
+#define EMOJI_EXTENDED_A_SUB7_START        0x1FADF
+#define EMOJI_EXTENDED_A_SUB7_END          0x1FAE9
+#define EMOJI_EXTENDED_A_SUB8_START        0x1FAF0
+#define EMOJI_EXTENDED_A_SUB8_END          0x1FAF8
 
 /* Returns 1 if ch is a cherry-picked Miscellaneous Technical emoji. */
 static inline int _PyUnicode_IsMiscTechnicalEmoji(Py_UCS4 ch)
@@ -120,9 +120,9 @@ static inline int _PyUnicode_IsEmoji(Py_UCS4 ch)
     if (ch >= EMOJI_GEOMETRIC_SHAPES_START && ch <= EMOJI_GEOMETRIC_SHAPES_END) return 1;
     if (ch >= EMOJI_MISC_SYMBOLS_START && ch <= EMOJI_DINGBATS_END) return 1;
     /* Misc Symbols and Arrows — 3 sub-ranges */
-    if (ch >= EMOJI_MSA_SUB1_START && ch <= EMOJI_MSA_SUB1_END) return 1;
-    if (ch >= EMOJI_MSA_SUB2_START && ch <= EMOJI_MSA_SUB2_END) return 1;
-    if (ch >= EMOJI_MSA_SUB3_START && ch <= EMOJI_MSA_SUB3_END) return 1;
+    if (ch >= EMOJI_MISC_SYMB_ARROWS_SUB1_START && ch <= EMOJI_MISC_SYMB_ARROWS_SUB1_END) return 1;
+    if (ch >= EMOJI_MISC_SYMB_ARROWS_SUB2_START && ch <= EMOJI_MISC_SYMB_ARROWS_SUB2_END) return 1;
+    if (ch >= EMOJI_MISC_SYMB_ARROWS_SUB3_START && ch <= EMOJI_MISC_SYMB_ARROWS_SUB3_END) return 1;
     /* SMP — early exit for non-SMP */
     if (ch < EMOJI_REGIONAL_IND_START) return 0;
     /* Fully assigned SMP blocks */
@@ -135,18 +135,18 @@ static inline int _PyUnicode_IsEmoji(Py_UCS4 ch)
     if (ch >= EMOJI_TRANSPORT_SUB2_START && ch <= EMOJI_TRANSPORT_SUB2_END) return 1;
     if (ch >= EMOJI_TRANSPORT_SUB3_START && ch <= EMOJI_TRANSPORT_SUB3_END) return 1;
     /* Geometric Shapes Extended — 3 sub-ranges */
-    if (ch >= EMOJI_GEO_EXT_SUB1_START && ch <= EMOJI_GEO_EXT_SUB1_END) return 1;
-    if (ch >= EMOJI_GEO_EXT_SUB2_START && ch <= EMOJI_GEO_EXT_SUB2_END) return 1;
-    if (ch == EMOJI_GEO_EXT_SUB3_START) return 1;  /* single char U+1F7F0 */
+    if (ch >= EMOJI_GEOMETRIC_EXT_SUB1_START && ch <= EMOJI_GEOMETRIC_EXT_SUB1_END) return 1;
+    if (ch >= EMOJI_GEOMETRIC_EXT_SUB2_START && ch <= EMOJI_GEOMETRIC_EXT_SUB2_END) return 1;
+    if (ch == EMOJI_GEOMETRIC_EXT_SUB3_START) return 1;  /* single char U+1F7F0 */
     /* Extended-A — 8 sub-ranges */
-    if (ch >= EMOJI_EXT_A_SUB1_START && ch <= EMOJI_EXT_A_SUB1_END) return 1;
-    if (ch >= EMOJI_EXT_A_SUB2_START && ch <= EMOJI_EXT_A_SUB2_END) return 1;
-    if (ch >= EMOJI_EXT_A_SUB3_START && ch <= EMOJI_EXT_A_SUB3_END) return 1;
-    if (ch >= EMOJI_EXT_A_SUB4_START && ch <= EMOJI_EXT_A_SUB4_END) return 1;
-    if (ch >= EMOJI_EXT_A_SUB5_START && ch <= EMOJI_EXT_A_SUB5_END) return 1;
-    if (ch >= EMOJI_EXT_A_SUB6_START && ch <= EMOJI_EXT_A_SUB6_END) return 1;
-    if (ch >= EMOJI_EXT_A_SUB7_START && ch <= EMOJI_EXT_A_SUB7_END) return 1;
-    if (ch >= EMOJI_EXT_A_SUB8_START && ch <= EMOJI_EXT_A_SUB8_END) return 1;
+    if (ch >= EMOJI_EXTENDED_A_SUB1_START && ch <= EMOJI_EXTENDED_A_SUB1_END) return 1;
+    if (ch >= EMOJI_EXTENDED_A_SUB2_START && ch <= EMOJI_EXTENDED_A_SUB2_END) return 1;
+    if (ch >= EMOJI_EXTENDED_A_SUB3_START && ch <= EMOJI_EXTENDED_A_SUB3_END) return 1;
+    if (ch >= EMOJI_EXTENDED_A_SUB4_START && ch <= EMOJI_EXTENDED_A_SUB4_END) return 1;
+    if (ch >= EMOJI_EXTENDED_A_SUB5_START && ch <= EMOJI_EXTENDED_A_SUB5_END) return 1;
+    if (ch >= EMOJI_EXTENDED_A_SUB6_START && ch <= EMOJI_EXTENDED_A_SUB6_END) return 1;
+    if (ch >= EMOJI_EXTENDED_A_SUB7_START && ch <= EMOJI_EXTENDED_A_SUB7_END) return 1;
+    if (ch >= EMOJI_EXTENDED_A_SUB8_START && ch <= EMOJI_EXTENDED_A_SUB8_END) return 1;
     return 0;
 }
 
