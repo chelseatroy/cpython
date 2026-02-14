@@ -20,8 +20,8 @@ extern "C" {
 /* Cherry-picked Miscellaneous Technical characters (U+2300..U+23FF). */
 #define EMOJI_MISC_TECH_WATCH          0x231A
 #define EMOJI_MISC_TECH_HOURGLASS      0x231B
-#define EMOJI_MISC_TECH_FF             0x23E9
-#define EMOJI_MISC_TECH_REW            0x23EA
+#define EMOJI_MISC_TECH_FAST_FORWARD             0x23E9
+#define EMOJI_MISC_TECH_REWIND            0x23EA
 #define EMOJI_MISC_TECH_UP             0x23EB
 #define EMOJI_MISC_TECH_DOWN           0x23EC
 #define EMOJI_MISC_TECH_ALARM          0x23F0
@@ -97,8 +97,8 @@ static inline int _PyUnicode_IsMiscTechnicalEmoji(Py_UCS4 ch)
     switch (ch) {
     case EMOJI_MISC_TECH_WATCH:
     case EMOJI_MISC_TECH_HOURGLASS:
-    case EMOJI_MISC_TECH_FF:
-    case EMOJI_MISC_TECH_REW:
+    case EMOJI_MISC_TECH_FAST_FORWARD:
+    case EMOJI_MISC_TECH_REWIND:
     case EMOJI_MISC_TECH_UP:
     case EMOJI_MISC_TECH_DOWN:
     case EMOJI_MISC_TECH_ALARM:
