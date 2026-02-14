@@ -150,6 +150,8 @@ static inline int _PyUnicode_IsEmoji(Py_UCS4 ch)
     return 0;
 }
 
+/* These return 1 for standard XID characters and for emoji characters
+   accepted by _PyUnicode_IsEmoji. */
 extern int _PyUnicode_IsXidStart(Py_UCS4 ch);
 extern int _PyUnicode_IsXidContinue(Py_UCS4 ch);
 extern int _PyUnicode_ToLowerFull(Py_UCS4 ch, Py_UCS4 *res);
