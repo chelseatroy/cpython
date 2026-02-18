@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivify - Result Detail</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: #f2f2f7;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+  }
+
+  .phone-frame {
+    width: 375px;
+    min-height: 667px;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .header {
+    padding: 16px 20px;
+    font-size: 20px;
+    font-weight: 600;
+    border-bottom: 1px solid #e5e5ea;
+  }
+
+  .image-placeholder {
+    margin: 20px;
+    aspect-ratio: 4 / 3;
+    background: #f2f2f7;
+    border: 2px dashed #c7c7cc;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8e8e93;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .zoom-section {
+    padding: 16px 20px;
+  }
+
+  .zoom-section label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #8e8e93;
+    margin-bottom: 8px;
+  }
+
+  .image-label-field {
+    padding: 0 20px 8px;
+  }
+
+  .image-label-field input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 15px;
+    border: 1px solid #c7c7cc;
+    border-radius: 8px;
+    outline: none;
+    font-family: inherit;
+  }
+
+  .image-label-field input[type="text"]:focus {
+    border-color: #007aff;
+  }
+
+  .filters-section {
+    padding: 0 20px 20px;
+  }
+
+  .filters-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #8e8e93;
+    margin-bottom: 16px;
+  }
+
+  .filter-group {
+    margin-bottom: 20px;
+  }
+
+  .filter-group label {
+    display: block;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #1c1c1e;
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: #e5e5ea;
+    outline: none;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #007aff;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  }
+</style>
+</head>
+<body>
+  <div class="phone-frame">
+    <div class="header">Result 1</div>
+
+    <div class="zoom-section">
+      <label for="zoom">Zoom</label>
+      <input type="range" id="zoom" min="0" max="100" value="30">
+    </div>
+
+    <div class="image-placeholder">IMAGE</div>
+
+    <div class="image-label-field">
+      <input type="text" id="image-label" placeholder="Image label">
+    </div>
+
+    <div class="filters-section">
+      <div class="filters-label">Filters</div>
+
+      <div class="filter-group">
+        <label for="warmth">Warmth</label>
+        <input type="range" id="warmth" min="0" max="100" value="30">
+      </div>
+
+      <div class="filter-group">
+        <label for="contrast">Contrast</label>
+        <input type="range" id="contrast" min="0" max="100" value="50">
+      </div>
+
+      <div class="filter-group">
+        <label for="saturation">Saturation</label>
+        <input type="range" id="saturation" min="0" max="100" value="50">
+      </div>
+    </div>
+  </div>
+</body>
+</html>

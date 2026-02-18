@@ -1,0 +1,35 @@
+Here's an ASCII version of that wireframe drawing:
+
+  +-------------------------+          +-------------------------+
+  | VIVIFY    (@) hi C!     |          | Result 1                |
+  |-------------------------|          |-------------------------|
+  | [Q Search             ] |          | ZOOM                    |
+                                       |  [=====--------------]  |
+  |-------------------------|          | +---------------------+ |
+  | Results Area            |          | |                     | |
+  | +---------------------+ |          | |                     | |
+  | | Result 1 ----------------->      | |       IMAGE         | |
+  | +---------------------+ |          | |                     | |
+  | | Result 2            | |          | |                     | |
+  | +---------------------+ |          | +---------------------+ |
+    | | Result 3            |          | [IMAGE LABEL]          |
+  | | Result 3            | |          |                         |
+  | +---------------------+ |          | FILTERS                 |
+  | | Result 4            | |          | ----------------------- |
+  | +---------------------+ |          | WARMTH                  |
+  |                         |          | [=====--------------]   |
+  |                         |          | CONTRAST                |
+  |                         |          | [========-----------]   |
+  |                         |          | SATURATION               |
+  |                         |          | [========-----------]   |
+  +-------------------------+          +-------------------------+
+
+
+  It shows two screens for what looks like an app called "VIVIFY":
+
+  - Left screen: A search/listing view with a search bar and a results area showing 4
+  results
+  - Right screen: A detail view for a selected result, showing an image preview and
+  filter controls (warmth and contrast sliders)
+
+  The arrow indicates navigation from selecting Result 1 to the detail screen.
