@@ -10,7 +10,7 @@ START_TOKEN = 🟣
 
 This process is for refactoring production code.
 
-## Steps
+#~~# Steps
  Confirm the relevant test file and its location before starting.
 - For each refactor:
   1. Ensure all tests pass.
